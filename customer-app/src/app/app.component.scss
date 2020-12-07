@@ -1,0 +1,32 @@
+.title {
+    text-align: center;
+    font-size: 46px;
+    font-family: 'Alegreya', serif;
+    font-style: italic;
+    background-color: #d9dcd7;
+    margin-right: 500px;
+    margin-left: 500px;
+    color: #0c360d;
+}
+
+:host {
+    ::ng-deep .prime-slider-override {
+        .p-progress-spinner-svg {
+            position: fixed;
+            width: 20%;
+        }
+    }    
+    ::ng-deep .transparentBG {
+        .p-dataview-header  {
+            background-color: transparent;
+            border-color:transparent;
+        }
+        .p-dataview-content {
+            background-color: transparent;
+            border-color:transparent;
+        }
+        .p-nogutter {
+            justify-content: space-evenly;
+        }
+    }
+}

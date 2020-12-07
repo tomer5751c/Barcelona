@@ -1,0 +1,30 @@
+<h1 class='title'>Barcelona Games</h1>
+
+<div style="text-align: center;">
+  <p-dropdown [options]="years" [(ngModel)]="selectedYear" placeholder="Select a Year" 
+  optionLabel="year" [showClear]="true">
+  </p-dropdown>
+
+  <button pButton type="button" label="Get Games!" (click)=getGames() style="margin-left: 40px;"></button>
+</div>
+
+<!-- Data View -->
+<p-dataView [value]="games" layout="grid" styleClass="transparentBG">
+  <p-header>
+    <p-dataViewLayoutOptions  *ngIf='games'></p-dataViewLayoutOptions>
+  </p-header>
+
+  <ng-template let-game pTemplate="listItem">
+    <app-game-card [game]=game></app-game-card>
+  </ng-template>
+
+  <ng-template let-game pTemplate="gridItem">
+      <div class="p-col-5 p-pl-4"> 
+          <app-game-card [game]=game></app-game-card> 
+      </div> 
+  </ng-template> 
+</p-dataView> 
+<!-- End Dataview -->
+
+<p-progressSpinner [strokeWidth]="1" styleClass="prime-slider-override" *ngIf="loading"></p-progressSpinner>
+   

@@ -1,0 +1,60 @@
+<div class="card" >
+    <p-header #mycard class="product-grid-item-bottom">
+        <div *ngIf="game.date">{{game.date|date}}</div>
+        <div class="league">{{game.league}} </div>
+        <div *ngIf="game.home else elseBlock" class="material-icons">
+            house
+        </div>
+        <ng-template #elseBlock>
+            <span class="material-icons">
+                flight
+            </span>
+        </ng-template>
+    </p-header>
+    <hr class="solid line">
+    <div class="p-grid product-grid-item-bottom" style="margin-top:3px;">
+        <div class="p-col-4 teamLogoName">
+            <img src={{game.logo1}} width="50px" height="50px">
+            <div>{{game.name1}}</div>
+        </div>
+        <div class="p-col-1 score">
+            {{game.score1}}
+        </div>
+        <div class="p-col-1 score">
+            -
+        </div>
+        <div class="p-col-1 score">
+            {{game.score2}}
+        </div>
+        <div class="p-col-4 teamLogoName">
+            <img src={{game.logo2}} width="50px" height="50px">
+            <div>{{game.name2}}</div>
+        </div>
+
+    </div>
+    <div>
+        <p-overlayPanel #op [appendTo]="mycard" [showCloseIcon]="true" [style]="{'margin-top':'84px','z-index':'1'}"
+            (onShow)="show($event)">
+            <iframe *ngIf="game.url else noUrl" width="420" height="315" [src]="game.url">
+            </iframe>
+            <ng-template #noUrl>
+                <p-progressSpinner></p-progressSpinner>
+            </ng-template>
+        </p-overlayPanel>
+    </div>
+</div>
+
+<button #vidButton (blur)="fun($event)" tabindex="1" class='youtube-btn' type="text" pButton label="Game Summary Video"
+    (click)="op.toggle($event)"></button>
+
+<!-- 
+<p-accordion (onOpen)= "onTabOpen($event)">
+    <p-accordionTab header="Game Summary Video">
+        <iframe *ngIf="game.url else noUrl" width="420" height="315"
+        [src]="game.url">
+        </iframe>
+        <ng-template #noUrl>
+            <p-progressSpinner></p-progressSpinner>
+        </ng-template>
+    </p-accordionTab>
+</p-accordion> -->

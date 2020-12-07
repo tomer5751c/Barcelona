@@ -1,0 +1,45 @@
+.card {
+    padding: 2rem;
+    box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
+    margin-bottom: 2rem;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    background: #ffffffc7;
+    color: #000000;
+    border-radius: 12px;
+    margin-bottom: 0px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+}
+.product-grid-item-bottom {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.teamLogoName{
+    text-align: center;
+}
+.score{
+    font-size: 49px;
+    color: #231b1b;
+    font-family: serif;
+    margin-top: -16px;
+}
+.league{
+    font-style: italic;
+}
+.line{
+    margin-top: 21px;
+    margin-right: 23px;
+    margin-left: 23px;
+}
+.over{
+    margin-top: 50px;
+}
+.youtube-btn{
+    border-radius: 0px;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+    width: -webkit-fill-available;
+    margin-bottom: 40px;
+}
