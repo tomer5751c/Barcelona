@@ -136,6 +136,7 @@ app.post('/insertCustomer/', function (req, res) {
         console.dir(reply);
     });
 });
+
 function getVideo(teamsString,score,year){
     return google.youtube('v3').search.list({
         key:'AIzaSyDr3Or2gSBGrmtoUdITCTtexGNmMAah__w',

@@ -14,7 +14,7 @@ export class GameCardComponent {
   constructor(private data: DMLCustomersService, private dom: DomSanitizer) { }
 
   show(event): void {
-    let id = '8Wtxez6E548';
+    let id = 'kB0_vTznm_8';
     this.game.url = this.dom.bypassSecurityTrustResourceUrl(`https://www.youtube.com/embed/${id}?controls=1`);
     return;
     if (!this.game.url){

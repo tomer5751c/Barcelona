@@ -36,27 +36,40 @@
 .over{
     margin-top: 50px;
 }
-:host {
-    ::ng-deep .accordion {
-        .p-accordion .p-accordion-header .p-accordion-header-link {
-            border-bottom-left-radius: 12px;
-            border-bottom-right-radius: 12px;
-        }
-        .p-accordion-header-link {        
-            border-bottom-left-radius: 12px;
-            border-bottom-right-radius: 12px;
-            margin-bottom: 40px;
-            justify-content: center;
-            background: #71d87d;
-        }
+
+
+:host ::ng-deep {
+    .p-accordion p-accordiontab:last-child .p-accordion-header:not(.p-highlight) .p-accordion-header-link {
+        border-radius: 0;
+        border-bottom-right-radius: 12px;
+        border-bottom-left-radius: 12px;
+        border-width: unset;
+        border-color: #ffffffc7;
+        background: #260f5dc7;
+        color: #ffffffc7;
+        font-weight: normal;
+        justify-content: center;
     }
+
+    .p-accordion .p-accordion-header:not(.p-disabled).p-highlight .p-accordion-header-link {
+        background: #260f5dc7;
+        border-color: #ffffffc7;
+        color: #ffffffc7;
+        border-radius: 0;
+        justify-content: center;
+        border-width: unset;
+    }
+
+    .p-accordion p-accordiontab:last-child .p-accordion-content {
+        border-bottom-right-radius: 12px;
+        border-bottom-left-radius: 12px;
+        background: #260f5dc7;
+        border-color: #ffffffc7;
+        border-width: unset;
+        text-align: center;
+    }
+    
+    .p-accordion p-accordiontab .p-accordion-tab {
+        margin-bottom: 50px;
+      }
 }
-
-
-// .youtube-btn{
-//     border-radius: 0px;
-//     border-bottom-left-radius: 12px;
-//     border-bottom-right-radius: 12px;
-//     width: -webkit-fill-available;
-//     margin-bottom: 40px;
-// }
