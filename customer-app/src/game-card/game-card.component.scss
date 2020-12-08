@@ -49,8 +49,9 @@
         color: #ffffffc7;
         font-weight: normal;
         justify-content: center;
+        box-shadow: none;
     }
-
+    
     .p-accordion .p-accordion-header:not(.p-disabled).p-highlight .p-accordion-header-link {
         background: #260f5dc7;
         border-color: #ffffffc7;
@@ -58,6 +59,7 @@
         border-radius: 0;
         justify-content: center;
         border-width: unset;
+        box-shadow: none;
     }
 
     .p-accordion p-accordiontab:last-child .p-accordion-content {

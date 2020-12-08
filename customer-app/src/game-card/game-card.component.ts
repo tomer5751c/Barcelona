@@ -24,11 +24,11 @@ export class GameCardComponent {
       });
     }
   }
-  fun(event): void{
-    alert('gggg');
-  }
+  
   onTabOpen(event): void {
-    let id;
+    let id= 'kB0_vTznm_8';
+    this.game.url = this.dom.bypassSecurityTrustResourceUrl(`https://www.youtube.com/embed/${id}?controls=1`);
+    return;
     if(!this.game.url){
       this.data.getVideoGame(this.game).subscribe(res => {
         id = res['videoId'];
