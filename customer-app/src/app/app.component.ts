@@ -16,27 +16,32 @@ export class AppComponent {
   games: any;
   showOption = true;
   loading: boolean;
-
+  countriesCodes: any;
   years: SelectItem[];
   selectedYear: string;
 
   groupedTeams: SelectItemGroup[];
   selectedTeam: string;
-
+  selectedCountry: string;
   constructor(private data: DMLCustomersService) {
 
     this.loading = false;
-
+    this.selectedCountry = 'Spain';
     this.selectedTeam = 'Barcelona';
     this.selectedYear = '2020';
-    this.initializeTeamsID();
-    this.getGames();
     
+    this.data.getCountriesFlags().subscribe(res => {
+      this.countriesCodes = res;
+      this.initializeTeamsID();
+      this.groupedTeams.forEach(v => v.value = this.countriesCodes[v.label]);
+      this.getGames();
+    });
+
     this.years = [];
     for (let i = 2000; i <= 2020; i++) {
       this.years.push({label: 'year', value:  i.toString()});
     }
-    
+
   }
 
   onclick(event): void {

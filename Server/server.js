@@ -45,6 +45,23 @@ function insert_To_Db(data) {
         }
     });
 }
+app.get('/countriesFlags/',function(req,res){
+    var countries={};
+    var options = {
+        method: 'GET',
+        url: url,
+        json: true,
+        headers: {
+            'Connection': 'keep-alive',
+            'Accept-Encoding': '',
+            'Accept-Language': 'en-US,en;q=0.8'
+        }
+    };
+    request('https://flagcdn.com/en/codes.json',options,function(err,response,body){ 
+    Object.keys(body).forEach(v=>countries[body[v]]=v);
+    res.send(countries);
+    })
+})
 app.get('/getGames/', function (req, res) {
     let games = [];
     let team = !req.query.team ? '83' : req.query.team;

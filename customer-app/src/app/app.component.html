@@ -7,7 +7,7 @@
     placeholder="Select a Team" group="true" showClear="true">
     <ng-template let-group pTemplate="group">
       <div class="p-d-flex p-ai-center">
-        <img src="https://upload.wikimedia.org/wikipedia/en/9/9a/Flag_of_Spain.svg"
+        <img src="https://flagcdn.com/16x12/{{group.value}}.png"
           [class]="'p-mr-2 flag flag-' + group.value" style="width: 20px" />
         <span>{{group.label}}</span>
       </div>
