@@ -10,6 +10,17 @@
     width: fit-content;
 }
 
+.searchPanel {
+    display: flex;
+    justify-content: center;
+
+    //---- Make it float ----
+    // position: fixed;
+    // bottom: 1rem;
+    // left: 25%;
+    // z-index: 10;
+}
+
 .searchLabel{
     background: #6267fdeb;
     border-radius: 4rem 0 0 4rem;
@@ -25,14 +36,6 @@
     border-left: none;
 }
 
-.yearDropdown {
-   background: #6267fdeb;
-   border: solid;
-   padding: 16px;
-   color: white;
-   border-left: none;
-}
-
 .teamDropdown {
    background: #6267fdeb;
    border: solid;
@@ -41,6 +44,13 @@
    border-right: none;
 }
 
+.yearDropdown {
+   background: #6267fdeb;
+   border: solid;
+   padding: 16px;
+   color: white;
+   border-left: none;
+}
 
 :host ::ng-deep {
 

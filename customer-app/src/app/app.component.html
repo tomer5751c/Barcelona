@@ -2,8 +2,7 @@
   <h1 class='title'>{{title}} Games</h1>
 </div>
 
-<div style="justify-content: center; display: flex;">
-  
+<div class="searchPanel">  
   <button pButton class="searchLabel" label="Search Games" icon="pi pi-search"></button>
   
   <p-dropdown class="teamDropdown" [(ngModel)]="selectedTeam" [options]="groupedTeams" optionValue="label" filter="true"
