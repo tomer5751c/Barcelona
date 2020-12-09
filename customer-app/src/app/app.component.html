@@ -4,7 +4,7 @@
 
 <div style="justify-content: center; display: flex;">
   
-  <button pButton class="filterLabel" label="Filter Games" icon="pi pi-search"></button>
+  <button pButton class="searchLabel" label="Search Games" icon="pi pi-search"></button>
   
   <p-dropdown class="teamDropdown" [(ngModel)]="selectedTeam" [options]="groupedTeams" optionValue="label" filter="true"
     placeholder="Select a Team" group="true" showClear="true">
@@ -17,7 +17,7 @@
     </ng-template>
   </p-dropdown>
 
-  <p-dropdown class="yearDropdown" [options]="years" [(ngModel)]="selectedYear" placeholder="Select a Year"
+  <p-dropdown ariaFilterLabel="test" class="yearDropdown" [options]="years" [(ngModel)]="selectedYear" placeholder="Select a Year"
     optionLabel="value" showClear="true">
   </p-dropdown>
 

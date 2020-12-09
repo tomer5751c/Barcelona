@@ -10,7 +10,7 @@
     width: fit-content;
 }
 
-.filterLabel{
+.searchLabel{
     background: #6267fdeb;
     border-radius: 4rem 0 0 4rem;
     border: solid;
@@ -25,32 +25,49 @@
     border-left: none;
 }
 
-.p-button:enabled:hover {
-    background: #d5d2ffeb;
-    border-color: white;
+.yearDropdown {
+   background: #6267fdeb;
+   border: solid;
+   padding: 16px;
+   color: white;
+   border-left: none;
 }
 
-.yearDropdown {
-    background: #6267fdeb;
-    border: solid;
-    padding: 16px;
-    color: white;
-    border-left: none;
+.teamDropdown {
+   background: #6267fdeb;
+   border: solid;
+   padding: 16px;
+   color: white;
+   border-right: none;
 }
 
 
 :host ::ng-deep {
-    
+
     .teamDropdown {
-        background: #6267fdeb;
-        border: solid;
-        padding: 16px;
-        color: white;
-        border-right: none;
-        
         .p-dropdown {
             width: 14rem;
         }
+     }
+
+    .p-dropdown {
+        background: #100f52eb;
+        border-radius: 10px;
+        border-width: 2px;
+        border-color: white;
+        
+        .p-inputtext {
+            color: white;
+        }
+    }
+    
+    .p-dropdown:not(.p-disabled):hover {
+        background: #d5d2ffeb;
+        border-color: white;
+    }
+    .p-button:enabled:hover {
+        background: #d5d2ffeb;
+        border-color: white;
     }
     
     .prime-slider-override {
