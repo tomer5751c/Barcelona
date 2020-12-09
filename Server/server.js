@@ -48,7 +48,7 @@ function insert_To_Db(data) {
 app.get('/countriesFlags/',function(req,res){
     var countries={};
     var options = {
-        method: 'GET',
+        method: 'GET',  
         url: url,
         json: true,
         headers: {
@@ -62,6 +62,7 @@ app.get('/countriesFlags/',function(req,res){
     res.send(countries);
     })
 })
+
 app.get('/getGames/', function (req, res) {
     let games = [];
     let team = !req.query.team ? '83' : req.query.team;

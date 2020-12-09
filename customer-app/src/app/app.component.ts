@@ -16,13 +16,16 @@ export class AppComponent {
   games: any;
   showOption = true;
   loading: boolean;
-  countriesCodes: any;
+  
   years: SelectItem[];
   selectedYear: string;
-
+  
   groupedTeams: SelectItemGroup[];
   selectedTeam: string;
+
   selectedCountry: string;
+  countriesCodes: any;
+
   constructor(private data: DMLCustomersService) {
 
     this.loading = false;
@@ -51,7 +54,7 @@ export class AppComponent {
   getGames(): void {
     this.loading = true;  
     
-    //Search the team ID
+    //Search for the team ID
     var teamID = '';
     this.groupedTeams.forEach(country =>{
       country.items.forEach(team => {

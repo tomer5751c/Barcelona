@@ -3,12 +3,15 @@
 </div>
 
 <div style="justify-content: center; display: flex;">
+  
+  <button pButton class="filterLabel" label="Filter Games" icon="pi pi-search"></button>
+  
   <p-dropdown class="teamDropdown" [(ngModel)]="selectedTeam" [options]="groupedTeams" optionValue="label" filter="true"
     placeholder="Select a Team" group="true" showClear="true">
     <ng-template let-group pTemplate="group">
       <div class="p-d-flex p-ai-center">
         <img src="https://flagcdn.com/16x12/{{group.value}}.png"
-          [class]="'p-mr-2 flag flag-' + group.value" style="width: 20px" />
+          [class]="'p-mr-2 flag flag-'" style="width: 20px" />
         <span>{{group.label}}</span>
       </div>
     </ng-template>
@@ -18,11 +21,13 @@
     optionLabel="value" showClear="true">
   </p-dropdown>
 
-  <button pButton [disabled]="!selectedYear || !selectedTeam" type="button" label="Get Games!" (click)=getGames()></button>
+  <button pButton class="getGamesBtn" [disabled]="!selectedYear || !selectedTeam" type="button" 
+  label="Get Games" (click)=getGames() icon="pi pi-chevron-right" iconPos="right">
+  </button>
 </div>
 
 <!-- Data View -->
-<p-dataView [value]="games" layout="grid" styleClass="transparentBG">
+<p-dataView [value]="games" layout="grid" styleClass="transparentBG" filterBy="">
   <p-header>
     <p-dataViewLayoutOptions *ngIf='games'></p-dataViewLayoutOptions>
   </p-header>

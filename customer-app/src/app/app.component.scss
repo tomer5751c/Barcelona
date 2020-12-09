@@ -10,15 +10,45 @@
     width: fit-content;
 }
 
-.yearDropdown {
-    margin-left: 5%;
-    margin-right: 5%;
+.filterLabel{
+    background: #6267fdeb;
+    border-radius: 4rem 0 0 4rem;
+    border: solid;
+    pointer-events: none;
+    border-right: none;
 }
+
+.getGamesBtn {
+    border: solid;
+    background: #6267fdeb;
+    border-radius: 0 4rem 4rem 0;;
+    border-left: none;
+}
+
+.p-button:enabled:hover {
+    background: #d5d2ffeb;
+    border-color: white;
+}
+
+.yearDropdown {
+    background: #6267fdeb;
+    border: solid;
+    padding: 16px;
+    color: white;
+    border-left: none;
+}
+
 
 :host ::ng-deep {
     
     .teamDropdown {
-        .p-dropdown{
+        background: #6267fdeb;
+        border: solid;
+        padding: 16px;
+        color: white;
+        border-right: none;
+        
+        .p-dropdown {
             width: 14rem;
         }
     }
