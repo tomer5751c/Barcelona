@@ -2,9 +2,6 @@ import { Component } from '@angular/core';
 import { SelectItem, SelectItemGroup } from 'primeng/api';
 import { DMLCustomersService } from './dmlcustomers.service';
 
-interface Year {
-  year: string;
-}
 
 @Component({
   selector: 'app-root',
@@ -16,6 +13,7 @@ export class AppComponent {
   games: any;
   showOption = true;
   loading: boolean;
+  title: string;
   
   years: SelectItem[];
   selectedYear: string;
@@ -52,6 +50,7 @@ export class AppComponent {
   }
 
   getGames(): void {
+    this.title = this.selectedTeam;
     this.loading = true;  
     
     //Search for the team ID
