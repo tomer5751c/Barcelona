@@ -25,15 +25,15 @@ export class DMLCustomersService {
   }
 
   // tslint:disable-next-line:typedef
-  getGames(year){
-    return this.http.get(this.url + '/getData/?year=' + year);
+  getGames(team, year){
+    return this.http.get(this.url + '/getGames/?team=' + team + '&year=' + year);
   }
   // tslint:disable-next-line:typedef
   getVideoGame(game){
     const teams = `${game.name1} vs ${game.name2}`;
     const score = `${game.score1}-${game.score2}`;
     const year = new Date(game.date).getFullYear();
-    return this.http.get(this.url + '/getVideo/?teamString=' + teams + '&score=' + score+'&year='+year);
+    return this.http.get(this.url + '/getVideo/?teamString=' + teams + '&score=' + score + '&year=' + year);
   }
 }
 

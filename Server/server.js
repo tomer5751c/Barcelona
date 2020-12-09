@@ -1,4 +1,4 @@
-var {google} = require('googleapis');
+var { google } = require('googleapis');
 const express = require('express')
 const sendmail = require('sendmail')();
 // const nodemailer = require('nodemailer')
@@ -45,9 +45,11 @@ function insert_To_Db(data) {
         }
     });
 }
-app.get('/getData/',function(req,res){
-    let year= !req.query.year ? new Date().getFullYear()-1:req.query.year;
-    let games=[];
+app.get('/getGames/', function (req, res) {
+    let games = [];
+    let team = !req.query.team ? '83' : req.query.team;
+    let year = !req.query.year ? new Date().getFullYear() : req.query.year;
+    
     var options = {
         method: 'GET',
         url: url,
@@ -58,76 +60,90 @@ app.get('/getData/',function(req,res){
             'Accept-Language': 'en-US,en;q=0.8'
         }
     };
-    var t=console.time('start');
-    request("https://site.web.api.espn.com/apis/site/v2/sports/soccer/ALL/teams/83/schedule?region=us&lang=en&season="+year,options,function(error,response,body){
-    console.timeEnd('start');
-    if(!body.events) {res.send([]);return };
-    console.time('start');
-    body.events.forEach(v=>{
+    var t = console.time('start');
+    request("https://site.web.api.espn.com/apis/site/v2/sports/soccer/ALL/teams/" + team
+        + "/schedule?region=us&lang=en&season=" + year, options, function (error, response, body) {
+            console.timeEnd('start');
+            if (!body.events) { res.send([]); return };
+            console.time('start');
+            body.events.forEach(v => {
 
-        team1=v.competitions[0].competitors[0];
-        team2=v.competitions[0].competitors[1];
+                team1 = v.competitions[0].competitors[0];
+                team2 = v.competitions[0].competitors[1];
 
-        name1 = team1.team.displayName;
-        name2 = team2.team.displayName;
-        
-        score1 = team1.score ?team1.score.value:'';
-        score2 = team2.score ?team2.score.value:'';
+                name1 = team1.team.displayName;
+                name2 = team2.team.displayName;
 
-        logo1=team1.team.logos;
-        if(logo1!==undefined){
-            logo1=logo1[0].href;
-        }
-        else{
-            logo1='https://tmssl.akamaized.net/images/wappen/head/13241.png';
-        }
-        logo2=team2.team.logos;
-        if(logo2!==undefined){
-            logo2=logo2[0].href;
-        }
-        else{
-            logo2='https://tmssl.akamaized.net/images/wappen/head/13241.png';
+                score1 = team1.score ? team1.score.value : '';
+                score2 = team2.score ? team2.score.value : '';
 
-        }
-        games.push({name1:name1, name2:name2, date:v.date, score1:score1,score2:score2,logo1:logo1, logo2:logo2,
-                     home:team1.id=='83', league: v.league.shortName});
-    })
-    console.timeEnd('start');
-    res.send(games);
-    })
+                logo1 = team1.team.logos;
+                if (logo1 !== undefined) {
+                    logo1 = logo1[0].href;
+                }
+                else {
+                    logo1 = 'https://tmssl.akamaized.net/images/wappen/head/13241.png';
+                }
+                logo2 = team2.team.logos;
+                if (logo2 !== undefined) {
+                    logo2 = logo2[0].href;
+                }
+                else {
+                    logo2 = 'https://tmssl.akamaized.net/images/wappen/head/13241.png';
+                }
+                games.push({
+                    name1: name1, name2: name2, date: v.date, score1: score1, score2: score2, logo1: logo1, logo2: logo2,
+                    home: team1.id == team, league: v.league.shortName
+                });
+            })
+            console.timeEnd('start');
+            res.send(games);
+        })
 })
-app.get('/getVideo/',function(req,res){
+
+app.get('/getVideo/', function (req, res) {
     console.log(req.query);
-   let teamsString=req.query.teamString;
-   let score=req.query.score;
-   let year= req.query.year;
-   console.log('score:',score);
-   console.log('teamsString:',teamsString);
+    let teamsString = req.query.teamString;
+    let score = req.query.score;
+    let year = req.query.year;
+    console.log('score:', score);
+    console.log('teamsString:', teamsString);
 
-   getVideo(teamsString,score,year).then(result=>{
-       console.log('here');
-       const items=result.data.items;
-       if(items.length>0){
-        let videoId=items[0].id.videoId;
-       console.log(videoId);
-       res.send({videoId:videoId});
-       }
-       else{
-           console.log('empty');
-           res.send({videoId:''});
-       }
-       
-   }).catch(err=>{
-       console.log(err);
-       res.send(err);
-   })
+    getVideo(teamsString, score, year).then(result => {
+        console.log('here');
+        const items = result.data.items;
+        if (items.length > 0) {
+            let videoId = items[0].id.videoId;
+            console.log(videoId);
+            res.send({ videoId: videoId });
+        }
+        else {
+            console.log('empty');
+            res.send({ videoId: '' });
+        }
+
+    }).catch(err => {
+        console.log(err);
+        res.send(err);
+    })
 })
+
+function getVideo(teamsString, score, year) {
+    return google.youtube('v3').search.list({
+        key: 'AIzaSyDr3Or2gSBGrmtoUdITCTtexGNmMAah__w',
+        part: 'snippet',
+        q: `${teamsString} ${score} ${year}`,
+        maxResults: '1',
+        order: 'relevance'
+    });
+}
+
 app.post('/insertCustomer/', function (req, res) {
     console.log((req.body.firstName));
     res.send(insert_To_Db({ firstName: req.body.firstName, lastName: req.body.lastName }));
 
     sendmail({
-        from:'noreply@tmail.com',
+        from: 'noreply@tmail.com',
         to: 'tomer5751@hotmail.com',
         subject: 'test sendmail',
         html: 'Mail of test sendmail',
@@ -136,16 +152,6 @@ app.post('/insertCustomer/', function (req, res) {
         console.dir(reply);
     });
 });
-
-function getVideo(teamsString,score,year){
-    return google.youtube('v3').search.list({
-        key:'AIzaSyDr3Or2gSBGrmtoUdITCTtexGNmMAah__w',
-        part:'snippet',
-        q:`${teamsString} ${score} ${year}`,
-        maxResults:'1',
-        order: 'relevance'
-      });
-}
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 

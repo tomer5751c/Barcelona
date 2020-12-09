@@ -6,9 +6,9 @@
             house
         </div>
         <ng-template #elseBlock>
-            <span class="material-icons">
+            <div class="material-icons">
                 flight
-            </span>
+            </div>
         </ng-template>
     </p-header>
     <hr class="solid line">
@@ -35,7 +35,8 @@
 
 <p-accordion (onOpen)="onTabOpen($event)">
     <p-accordionTab header="Game Summary Video">
-        <iframe *ngIf="game.url else noUrl" width="420" height="315" [src]="game.url">
+        <iframe 
+            *ngIf="game.url else noUrl" width="578.206" height="314.989" [src]="game.url">
         </iframe>
         <ng-template #noUrl>
             <p-progressSpinner></p-progressSpinner>

@@ -26,7 +26,7 @@ export class GameCardComponent {
   }
   
   onTabOpen(event): void {
-    let id= 'kB0_vTznm_8';
+    let id= 'MR0-kfUqvXc';
     this.game.url = this.dom.bypassSecurityTrustResourceUrl(`https://www.youtube.com/embed/${id}?controls=1`);
     return;
     if(!this.game.url){
