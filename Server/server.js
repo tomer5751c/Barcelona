@@ -77,12 +77,13 @@ app.get('/getGames/', function (req, res) {
             'Accept-Language': 'en-US,en;q=0.8'
         }
     };
-    var t = console.time('start');
-    request("https://site.web.api.espn.com/apis/site/v2/sports/soccer/ALL/teams/" + team
+    var t = console.time('getData');
+    
+    var r=request("https://site.web.api.espn.com/apis/site/v2/sports/soccer/ALL/teams/" + team
         + "/schedule?region=us&lang=en&season=" + year, options, function (error, response, body) {
-            console.timeEnd('start');
+            console.timeEnd('getData');
             if (!body.events) { res.send([]); return };
-            console.time('start');
+            console.time('initData');
             body.events.forEach(v => {
 
                 team1 = v.competitions[0].competitors[0];
@@ -113,7 +114,7 @@ app.get('/getGames/', function (req, res) {
                     home: team1.id == team, league: v.league.shortName
                 });
             })
-            console.timeEnd('start');
+            console.timeEnd('initData');
             res.send(games);
         })
 })
