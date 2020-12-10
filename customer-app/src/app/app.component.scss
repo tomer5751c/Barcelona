@@ -62,21 +62,21 @@
 }
 
 :host ::ng-deep {
-
-    .teamDropdown {
-        .p-dropdown {
-            width: 14rem;
-        }
-     }
-
+    
     .p-dropdown {
         background: #525ac3eb;
         border-radius: 10px;
         border-width: 2px;
         border-color: black;
         
-        .p-inputtext {
+        .p-dropdown-label {
             color: white;
+        }
+    }
+    
+    .teamDropdown {
+        .p-dropdown {
+            width: 14rem; 
         }
     }
     
