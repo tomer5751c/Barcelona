@@ -8,48 +8,54 @@
     border-radius: 10px;
     padding: 0px 11px;
     width: fit-content;
+    margin: 30px 0 0 0;
 }
 
 .searchPanel {
     display: flex;
-    justify-content: center;
-
-    //---- Make it float ----
-    // position: fixed;
-    // bottom: 1rem;
-    // left: 25%;
-    // z-index: 10;
+    position: fixed;
+    bottom: 1rem;
+    left: 25%;
+    z-index: 10;
 }
 
-.searchLabel{
-    background: #6267fdeb;
+.searchText{
+    background: #0a0c42eb;
+    border-color: black;
     border-radius: 4rem 0 0 4rem;
-    border: solid;
     pointer-events: none;
     border-right: none;
+    border-width: 3px;
+    box-shadow: none;
 }
 
 .getGamesBtn {
-    border: solid;
-    background: #6267fdeb;
+    background: #0a0c42eb;
+    border-color: black;
     border-radius: 0 4rem 4rem 0;;
-    border-left: none;
+    border-width: 3px;
+    box-shadow: none;
 }
 
 .teamDropdown {
-   background: #6267fdeb;
+   background: #0a0c42eb;
+   color: black;
    border: solid;
+   border-width: 3px;
    padding: 16px;
-   color: white;
    border-right: none;
+   box-shadow: none;
 }
 
 .yearDropdown {
-   background: #6267fdeb;
+   background: #0a0c42eb;
+   color: black;
    border: solid;
+   border-right: none;
+   border-width: 3px;
    padding: 16px;
-   color: white;
    border-left: none;
+   box-shadow: none;
 }
 
 :host ::ng-deep {
@@ -61,10 +67,10 @@
      }
 
     .p-dropdown {
-        background: #100f52eb;
+        background: #525ac3eb;
         border-radius: 10px;
         border-width: 2px;
-        border-color: white;
+        border-color: black;
         
         .p-inputtext {
             color: white;
@@ -73,11 +79,11 @@
     
     .p-dropdown:not(.p-disabled):hover {
         background: #d5d2ffeb;
-        border-color: white;
+        border-color: black;
     }
     .p-button:enabled:hover {
         background: #d5d2ffeb;
-        border-color: white;
+        border-color: black;
     }
     
     .prime-slider-override {
