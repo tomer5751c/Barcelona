@@ -2,9 +2,6 @@ import { Component } from '@angular/core';
 import { SelectItem, SelectItemGroup } from 'primeng/api';
 import { DMLCustomersService } from './dmlcustomers.service';
 
-interface Year {
-  year: string;
-}
 
 @Component({
   selector: 'app-root',
@@ -16,16 +13,21 @@ export class AppComponent {
   games: any;
   showOption = true;
   loading: boolean;
-  countriesCodes: any;
+  title: string;
+  
   years: SelectItem[];
   selectedYear: string;
-
+  
   groupedTeams: SelectItemGroup[];
   selectedTeam: string;
+
   selectedCountry: string;
+  countriesCodes: any;
+
   constructor(private data: DMLCustomersService) {
 
-    this.loading = false;
+    this.loading = true;
+
     this.selectedCountry = 'Spain';
     this.selectedTeam = 'Barcelona';
     this.selectedYear = '2020';
@@ -49,9 +51,10 @@ export class AppComponent {
   }
 
   getGames(): void {
+    this.title = this.selectedTeam;
     this.loading = true;  
     
-    //Search the team ID
+    //Search for the team ID
     var teamID = '';
     this.groupedTeams.forEach(country =>{
       country.items.forEach(team => {

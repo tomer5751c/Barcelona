@@ -8,40 +8,117 @@
     border-radius: 10px;
     padding: 0px 11px;
     width: fit-content;
+    margin: 30px 0 0 0;
+}
+
+.searchPanel {
+    display: flex;
+    position: fixed;
+    bottom: 1rem;
+    left: 25%;
+    z-index: 10;
+}
+
+.searchText{
+    background: #0a0c42eb;
+    border-color: black;
+    border-radius: 4rem 0 0 4rem;
+    pointer-events: none;
+    border-width: 3px 0px 3px 3px;
+    box-shadow: none;
+    font-family: fantasy;
+}
+
+.getGamesBtn {
+    background: #0a0c42eb;
+    border-color: black;
+    border-radius: 0 4rem 4rem 0;;
+    border-width: 3px;
+    box-shadow: none;
+    font-family: sans-serif;
+    font-style: italic;
+}
+
+.teamDropdown {
+   background: #0a0c42eb;
+   color: black;
+   border: solid;
+   border-width: 3px 0px 3px 3px;
+   padding: 16px;
+   box-shadow: none;
 }
 
 .yearDropdown {
-    margin-left: 5%;
-    margin-right: 5%;
+    background: #0a0c42eb;
+    color: black;
+    border: solid;
+    border-width: 3px 0;
+    box-shadow: none;
+    padding: 16px;
 }
 
 :host ::ng-deep {
     
-    .teamDropdown {
-        .p-dropdown{
-            width: 14rem;
+    .p-dropdown {
+        background: #525ac3eb;
+        border-radius: 10px;
+        border-width: 3px;
+        border-color: black;
+        
+        .p-dropdown-label {
+            color: white;
         }
+    }
+    
+    .teamDropdown {
+        .p-dropdown {
+            width: 14rem; 
+        }
+    }
+    
+    .p-dropdown:not(.p-disabled):hover {
+        background: #d5d2ffeb;
+        border-color: black;
+    }
+    .p-button:enabled:hover {
+        background: #d5d2ffeb;
+        border-color: black;
     }
     
     .prime-slider-override {
         .p-progress-spinner-svg {
             position: fixed;
             width: 20%;
-            margin-top: 80px;
+            margin-top: 20px;
         }
     }    
     
-    .transparentBG {
+    .dataviewBG {
+        
         .p-dataview-header  {
-            background-color: transparent;
-            border-color:transparent;
+            background: transparent;
+            border: none;
         }
+
         .p-dataview-content {
-            background-color: transparent;
-            border-color:transparent;
+            background: transparent;
+            border: none;
+
+            .p-nogutter {
+                justify-content: space-around;
+                
+                .p-dataview-emptymessage{
+                    display: none;
+                }
+            }
         }
-        .p-nogutter {
-            justify-content: space-around;
+
+        .p-paginator-bottom {
+            margin-bottom: 9rem;
+            background: #ffffffd7;
+            border-color: black;
+            border-width: 4px 0;
+            border-radius: 10p;
         }
     }
 }

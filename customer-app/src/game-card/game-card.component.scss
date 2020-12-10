@@ -6,46 +6,63 @@
     padding-bottom: 20px;
     background: #ffffffc7;
     color: #000000;
-    border-radius: 12px;
+    border-radius: 12px 12px 0 0;
     margin-bottom: 0px;
-    border-bottom-left-radius: 0px;
-    border-bottom-right-radius: 0px;
 }
+
 .product-grid-item-bottom {
     display: flex;
     align-items: center;
     justify-content: space-between;
 }
-.teamLogoName{
+
+.teamLogoName {
     text-align: center;
 }
+
+.teamName {
+    font-family: 'Rockwell';
+    margin-top: 5px;
+}
+
+.date {
+    font-family: 'Baskerville Old Face';
+    font-weight: bold;
+    font-size: 16px;
+}
+
 .score{
     font-size: 49px;
     color: #231b1b;
     font-family: serif;
     margin-top: -16px;
 }
+
 .league{
     font-style: italic;
+    font-family: 'Alegreya';
+    font-size: 19px;
 }
+
 .line{
-    margin-top: 21px;
-    margin-right: 23px;
-    margin-left: 23px;
+    margin: 21px;
 }
+
 .over{
     margin-top: 50px;
 }
 
+.accordionHeader {
+    font-family: 'Alegreya';
+    font-size: 17px;
+}
 
 :host ::ng-deep {
     .p-accordion p-accordiontab:last-child .p-accordion-header:not(.p-highlight) .p-accordion-header-link {
-        border-radius: 0;
-        border-bottom-right-radius: 12px;
-        border-bottom-left-radius: 12px;
+        border-radius: 0 0 12px 12px;
         border-width: unset;
         border-color: #ffffffc7;
-        background: #260f5dc7;
+        background: #131a6feb;
         color: #ffffffc7;
         font-weight: normal;
         justify-content: center;
@@ -53,7 +70,7 @@
     }
     
     .p-accordion .p-accordion-header:not(.p-disabled).p-highlight .p-accordion-header-link {
-        background: #260f5dc7;
+        background: #131a6feb;
         border-color: #ffffffc7;
         color: #ffffffc7;
         border-radius: 0;

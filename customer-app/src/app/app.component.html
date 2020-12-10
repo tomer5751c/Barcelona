@@ -1,30 +1,35 @@
 <div style="justify-content: center; display: flex;">
-  <h1 class='title'>{{selectedTeam}} Games</h1>
+  <h1 class='title'>{{title}} Games</h1>
 </div>
 
-<div style="justify-content: center; display: flex;">
-  <p-dropdown class="teamDropdown" [(ngModel)]="selectedTeam" [options]="groupedTeams" optionValue="label" filter="true"
-    placeholder="Select a Team" group="true" showClear="true">
+<!------ Search Panel ------>
+<div class="searchPanel">
+  <button pButton class="searchText" label="Search Games" icon="pi pi-search"></button>
+
+  <p-dropdown class="teamDropdown" [(ngModel)]="selectedTeam" [options]="groupedTeams" optionValue="label" 
+    filter="true" placeholder="Select a Team" group="true" showClear="true">
     <ng-template let-group pTemplate="group">
       <div class="p-d-flex p-ai-center">
-        <img src="https://flagcdn.com/16x12/{{group.value}}.png"
-          [class]="'p-mr-2 flag flag-' + group.value" style="width: 20px" />
+        <img src="https://flagcdn.com/16x12/{{group.value}}.png" [class]="'p-mr-2 flag flag-'" style="width: 20px" />
         <span>{{group.label}}</span>
       </div>
     </ng-template>
   </p-dropdown>
 
-  <p-dropdown class="yearDropdown" [options]="years" [(ngModel)]="selectedYear" placeholder="Select a Year"
-    optionLabel="value" showClear="true">
+  <p-dropdown ariaFilterLabel="test" class="yearDropdown" [options]="years" [(ngModel)]="selectedYear"
+    placeholder="Select a Year" optionLabel="value" showClear="true">
   </p-dropdown>
 
-  <button pButton [disabled]="!selectedYear || !selectedTeam" type="button" label="Get Games!" (click)=getGames()></button>
-</div>
+  <button pButton class="getGamesBtn" [disabled]="!selectedYear || !selectedTeam" type="button" 
+    label="Get Games" (click)=getGames() icon="pi pi-chevron-right" iconPos="right">
+  </button>
+</div> 
+<!--- End Panel-->
 
 <!-- Data View -->
-<p-dataView [value]="games" layout="grid" styleClass="transparentBG">
-  <p-header>
-    <p-dataViewLayoutOptions *ngIf='games'></p-dataViewLayoutOptions>
+<p-dataView [value]="games" layout="grid" styleClass="dataviewBG" [paginator]="!loading" [rows]="15" >
+  <p-header *ngIf='!loading'>
+    <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
   </p-header>
 
   <ng-template let-game pTemplate="listItem">

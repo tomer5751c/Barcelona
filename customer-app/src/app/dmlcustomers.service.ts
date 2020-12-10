@@ -26,8 +26,8 @@ export class DMLCustomersService {
    // tslint:disable-next-line:typedef
   getCountriesFlags(){
     return this.http.get(this.url + '/countriesFlags/');
-
   }
+  
   // tslint:disable-next-line:typedef
   getGames(team, year){
     return this.http.get(this.url + '/getGames/?team=' + team + '&year=' + year);
