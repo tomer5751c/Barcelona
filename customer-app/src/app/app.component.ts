@@ -26,7 +26,8 @@ export class AppComponent {
 
   constructor(private data: DMLCustomersService) {
 
-    this.loading = false;
+    this.loading = true;
+
     this.selectedCountry = 'Spain';
     this.selectedTeam = 'Barcelona';
     this.selectedYear = '2020';

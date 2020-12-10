@@ -93,21 +93,36 @@
         .p-progress-spinner-svg {
             position: fixed;
             width: 20%;
-            margin-top: 80px;
+            margin-top: 20px;
         }
     }    
     
-    .transparentBG {
+    .dataviewBG {
+        
         .p-dataview-header  {
-            background-color: transparent;
-            border-color:transparent;
+            background: transparent;
+            border: none;
         }
+
         .p-dataview-content {
-            background-color: transparent;
-            border-color:transparent;
+            background: transparent;
+            border: none;
+
+            .p-nogutter {
+                justify-content: space-around;
+                
+                .p-dataview-emptymessage{
+                    display: none;
+                }
+            }
         }
-        .p-nogutter {
-            justify-content: space-around;
+
+        .p-paginator-bottom {
+            margin-bottom: 9rem;
+            background: #ffffffd7;
+            border-color: black;
+            border-width: 3px;
+            border-radius: 10p;
         }
     }
 }
