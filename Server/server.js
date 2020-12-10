@@ -1,11 +1,13 @@
 var { google } = require('googleapis');
+var fs = require('fs');
 const express = require('express')
 const sendmail = require('sendmail')();
 // const nodemailer = require('nodemailer')
 var bodyParser = require('body-parser')
 var cors = require('cors')
-var request = require('request');
+const faster=require('req-fast');
 const { Logger } = require('mongodb');
+const { response } = require('express');
 var MongoClient = require('mongodb').MongoClient;
 var url = "mongodb+srv://tomerc:5751tomC*@my-db-o26ig.mongodb.net/test?retryWrites=true&useNewUrlParser=true";
 const app = express()
@@ -45,22 +47,27 @@ function insert_To_Db(data) {
         }
     });
 }
-app.get('/countriesFlags/',function(req,res){
+app.get('/countriesFlags/',async function(req,res){
     var countries={};
     var options = {
         method: 'GET',  
-        url: url,
-        json: true,
+        url: 'https://flagcdn.com/en/codes.json',
+        responseType: 'json',
+         json: true,
         headers: {
             'Connection': 'keep-alive',
             'Accept-Encoding': '',
             'Accept-Language': 'en-US,en;q=0.8'
         }
     };
-    request('https://flagcdn.com/en/codes.json',options,function(err,response,body){ 
-    Object.keys(body).forEach(v=>countries[body[v]]=v);
-    res.send(countries);
-    })
+    fs.readFile('codes.json','utf8',(err,data)=>{
+        if(err){
+            console.log(err);
+        }
+        var body=JSON.parse(data);
+        Object.keys(body).forEach(v=>countries[body[v]]=v);
+        res.send(countries);
+    })  
 })
 
 app.get('/getGames/', function (req, res) {
@@ -70,8 +77,10 @@ app.get('/getGames/', function (req, res) {
     
     var options = {
         method: 'GET',
-        url: url,
+        url:"https://site.web.api.espn.com/apis/site/v2/sports/soccer/ALL/teams/" + team
+        + "/schedule?region=us&lang=en&season=" + year,
         json: true,
+        responseType: 'json',
         headers: {
             'Connection': 'keep-alive',
             'Accept-Encoding': '',
@@ -79,9 +88,9 @@ app.get('/getGames/', function (req, res) {
         }
     };
     var t = console.time('getData');
-    
-    var r=request("https://site.web.api.espn.com/apis/site/v2/sports/soccer/ALL/teams/" + team
-        + "/schedule?region=us&lang=en&season=" + year, options, function (error, response, body) {
+    faster(options,(err,respo)=>{
+        if(respo){
+            var body=respo.body;
             console.timeEnd('getData');
             if (!body.events) { res.send([]); return };
             console.time('initData');
@@ -117,7 +126,7 @@ app.get('/getGames/', function (req, res) {
             })
             console.timeEnd('initData');
             res.send(games);
-        })
+        }})
 })
 
 app.get('/getVideo/', function (req, res) {
