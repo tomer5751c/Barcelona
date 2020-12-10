@@ -6,10 +6,8 @@
     padding-bottom: 20px;
     background: #ffffffc7;
     color: #000000;
-    border-radius: 12px;
+    border-radius: 12px 12px 0 0;
     margin-bottom: 0px;
-    border-bottom-left-radius: 0px;
-    border-bottom-right-radius: 0px;
 }
 
 .product-grid-item-bottom {
@@ -47,9 +45,7 @@
 }
 
 .line{
-    margin-top: 21px;
-    margin-right: 23px;
-    margin-left: 23px;
+    margin: 21px;
 }
 
 .over{
@@ -63,9 +59,7 @@
 
 :host ::ng-deep {
     .p-accordion p-accordiontab:last-child .p-accordion-header:not(.p-highlight) .p-accordion-header-link {
-        border-radius: 0;
-        border-bottom-right-radius: 12px;
-        border-bottom-left-radius: 12px;
+        border-radius: 0 0 12px 12px;
         border-width: unset;
         border-color: #ffffffc7;
         background: #131a6feb;
