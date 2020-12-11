@@ -30,7 +30,7 @@ export class AppComponent {
 
     this.selectedCountry = 'Spain';
     this.selectedTeam = 'Barcelona';
-    this.selectedYear = '2020';
+    this.selectedYear = 'Upcoming';
     
     this.data.getCountriesFlags().subscribe(res => {
       this.countriesCodes = res;
@@ -43,7 +43,7 @@ export class AppComponent {
     for (let i = 2000; i <= 2020; i++) {
       this.years.push({label: 'year', value:  i.toString()});
     }
-
+    this.years.push({label: 'year', value: 'Upcoming'});
   }
 
   onclick(event): void {

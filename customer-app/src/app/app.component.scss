@@ -45,7 +45,6 @@
    border: solid;
    border-width: 3px 0px 3px 3px;
    padding: 16px;
-   box-shadow: none;
 }
 
 .yearDropdown {
@@ -53,7 +52,6 @@
     color: black;
     border: solid;
     border-width: 3px 0;
-    box-shadow: none;
     padding: 16px;
 }
 
@@ -79,6 +77,10 @@
     .p-dropdown:not(.p-disabled):hover {
         background: #d5d2ffeb;
         border-color: black;
+    }
+    .p-dropdown:not(.p-disabled).p-focus{
+        border-color: transparent;
+        box-shadow: none;
     }
     .p-button:enabled:hover {
         background: #d5d2ffeb;

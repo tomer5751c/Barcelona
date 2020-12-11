@@ -1,42 +1,50 @@
 <div class="card">
-    <p-header #mycard class="product-grid-item-bottom">
-        <div *ngIf="game.date" class="date">{{game.date|date}}</div>
+    <p-header #mycard class="product-grid-header">
+        <div *ngIf="game.date">
+            <div class="date"> {{game.date|date}} </div>
+            <div *ngIf="game.timeStatus!=='TBC' && game.score1===''"  
+                class="time"> {{game.date| date:"EEE"}} {{game.date| date:"HH:mm"}} </div>
+        </div>
         <div class="league">{{game.league}} </div>
-        <div *ngIf="game.home else elseBlock" class="material-icons">
+        <div *ngIf="game.home else elseBlock" class="material-icons homeAwayIcon">
             house
         </div>
         <ng-template #elseBlock>
-            <div class="material-icons">
+            <div class="material-icons homeAwayIcon">
                 flight
             </div>
         </ng-template>
     </p-header>
     <hr class="solid line">
-    <div class="p-grid product-grid-item-bottom" style="margin-top:3px;">
-        <div class="p-col-4 teamLogoName">
+    <div class="p-grid product-grid-content">
+        <div class="teamLogoName">
             <img src={{game.logo1}} width="50px" height="50px">
             <div class="teamName">{{game.name1}}</div>
         </div>
-        <div class="p-col-1 score">
+        <div class="score">
             {{game.score1}}
         </div>
-        <div class="p-col-1 score">
+        <div *ngIf="game.score1!=='' else vsBlock" class="score" style="margin-bottom: 13px;">
             -
         </div>
-        <div class="p-col-1 score">
+        <ng-template #vsBlock>
+            <div class="score" style="margin-bottom: 23px;">
+                vs
+            </div>
+        </ng-template>
+        <div class="score">
             {{game.score2}}
         </div>
-        <div class="p-col-4 teamLogoName">
+        <div class="teamLogoName">
             <img src={{game.logo2}} width="50px" height="50px">
             <div class="teamName">{{game.name2}}</div>
         </div>
     </div>
 </div>
 
-<p-accordion (onOpen)="onTabOpen($event)">
+<p-accordion  (onOpen)="onTabOpen($event)">
     <p-accordionTab class="accordionHeader" header="Game Summary Video">
-        <iframe 
-            *ngIf="game.url else noUrl" width="578.206" height="314.989" [src]="game.url">
+        <iframe *ngIf="game.url else noUrl" width="578.206" height="314.989" [src]="game.url">
         </iframe>
         <ng-template #noUrl>
             <p-progressSpinner></p-progressSpinner>

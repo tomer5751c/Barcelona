@@ -10,10 +10,45 @@
     margin-bottom: 0px;
 }
 
-.product-grid-item-bottom {
-    display: flex;
+.product-grid-header {
+    display: grid;
     align-items: center;
-    justify-content: space-between;
+    grid-template-columns: 25% auto 25%;
+}
+.product-grid-content {
+    display: grid;
+    grid-template-columns: 160px 40px auto 40px 160px;
+    justify-items: center;
+    align-items: center;
+}
+
+.date {
+    font-family: 'Baskerville Old Face';
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.time {
+    font-family: 'Consolas';
+    font-size: 16px;
+    font-weight: bold;
+    font-style: italic;
+    margin-top: 3px;
+}
+
+.league{
+    font-style: italic;
+    font-family: 'Alegreya';
+    font-size: 19px;
+    justify-self: center;
+}
+
+.homeAwayIcon {
+    justify-self: end;
+}
+
+.line{
+    margin: 16px 21px 30px 21px;
 }
 
 .teamLogoName {
@@ -23,33 +58,13 @@
 .teamName {
     font-family: 'Rockwell';
     margin-top: 5px;
-}
-
-.date {
-    font-family: 'Baskerville Old Face';
-    font-weight: bold;
-    font-size: 16px;
+    font-size: 18px;
 }
 
 .score{
     font-size: 49px;
     color: #231b1b;
     font-family: serif;
-    margin-top: -16px;
-}
-
-.league{
-    font-style: italic;
-    font-family: 'Alegreya';
-    font-size: 19px;
-}
-
-.line{
-    margin: 21px;
-}
-
-.over{
-    margin-top: 50px;
 }
 
 .accordionHeader {

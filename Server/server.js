@@ -75,10 +75,12 @@ app.get('/getGames/', function (req, res) {
     let team = !req.query.team ? '83' : req.query.team;
     let year = !req.query.year ? new Date().getFullYear() : req.query.year;
     
+    var yearParam = (year==='Upcoming')? '&fixture=true' : ('&season=' + year); 
+
     var options = {
         method: 'GET',
         url:"https://site.web.api.espn.com/apis/site/v2/sports/soccer/ALL/teams/" + team
-        + "/schedule?region=us&lang=en&season=" + year,
+        + "/schedule?region=us&lang=en" + yearParam,
         json: true,
         responseType: 'json',
         headers: {
@@ -110,18 +112,19 @@ app.get('/getGames/', function (req, res) {
                     logo1 = logo1[0].href;
                 }
                 else {
-                    logo1 = 'https://tmssl.akamaized.net/images/wappen/head/13241.png';
+                    logo1 = 'https://a.espncdn.com/combiner/i?img=/i/teamlogos/soccer/500/default-team-logo-500.png&w=100&h=100';
                 }
                 logo2 = team2.team.logos;
                 if (logo2 !== undefined) {
                     logo2 = logo2[0].href;
                 }
                 else {
-                    logo2 = 'https://tmssl.akamaized.net/images/wappen/head/13241.png';
+                    logo2 = 'https://a.espncdn.com/combiner/i?img=/i/teamlogos/soccer/500/default-team-logo-500.png&w=100&h=100';
                 }
+                timeStatus = v.competitions[0].status.type.shortDetail;
                 games.push({
-                    name1: name1, name2: name2, date: v.date, score1: score1, score2: score2, logo1: logo1, logo2: logo2,
-                    home: team1.id == team, league: v.league.shortName
+                    name1: name1, name2: name2, date: v.date, score1: score1, score2: score2, logo1: logo1,
+                    logo2: logo2, home: team1.id == team, league: v.league.shortName, timeStatus: timeStatus
                 });
             })
             console.timeEnd('initData');
