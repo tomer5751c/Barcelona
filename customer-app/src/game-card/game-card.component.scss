@@ -1,23 +1,21 @@
 .card {
-    padding: 2rem;
     box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
-    margin-bottom: 2rem;
-    padding-top: 20px;
-    padding-bottom: 20px;
+    border-radius: 12px 12px 0 0;
+    padding: 20px 2rem;
     background: #ffffffc7;
     color: #000000;
-    border-radius: 12px 12px 0 0;
-    margin-bottom: 0px;
 }
 
 .product-grid-header {
     display: grid;
     align-items: center;
     grid-template-columns: 25% auto 25%;
+    grid-template-rows: 40px;
 }
 .product-grid-content {
     display: grid;
-    grid-template-columns: 160px 40px auto 40px 160px;
+    grid-template-columns: 33% 10% auto 10% 33%;
+    grid-template-rows: 105px;
     justify-items: center;
     align-items: center;
 }
