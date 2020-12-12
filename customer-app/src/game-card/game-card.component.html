@@ -1,8 +1,8 @@
-<div class="card">
+<div class="card" [ngClass]="{'noAccordion' : !game.isFinished}">
     <p-header #mycard class="product-grid-header">
         <div *ngIf="game.date">
             <div class="date"> {{game.date|date}} </div>
-            <div *ngIf="game.timeStatus!=='TBC' && game.score1===''"  
+            <div *ngIf="game.timeStatus!=='TBC' && !game.isFinished"  
                 class="time"> {{game.date| date:"EEE"}} {{game.date| date:"HH:mm"}} </div>
         </div>
         <div class="league">{{game.league}} </div>
@@ -24,7 +24,7 @@
         <div class="score">
             {{game.score1}}
         </div>
-        <div *ngIf="game.score1!=='' else vsBlock" class="score" style="margin-bottom: 13px;">
+        <div *ngIf="game.isFinished else vsBlock" class="score" style="margin-bottom: 13px;">
             -
         </div>
         <ng-template #vsBlock>
@@ -42,12 +42,13 @@
     </div>
 </div>
 
-<p-accordion  (onOpen)="onTabOpen($event)">
+<p-accordion *ngIf="game.isFinished" (onOpen)="onTabOpen($event)">
     <p-accordionTab class="accordionHeader" header="Game Summary Video">
-        <iframe *ngIf="game.url else noUrl" width="578.206" height="314.989" [src]="game.url">
-        </iframe>
-        <ng-template #noUrl>
-            <p-progressSpinner></p-progressSpinner>
-        </ng-template>
+            <iframe *ngIf="game.url else noUrl" 
+                width="578.206" height="314.989" [src]="game.url">
+            </iframe>
+            <ng-template #noUrl>
+                <p-progressSpinner></p-progressSpinner>
+            </ng-template>
     </p-accordionTab>
 </p-accordion>

@@ -104,27 +104,22 @@ app.get('/getGames/', function (req, res) {
                 name1 = team1.team.displayName;
                 name2 = team2.team.displayName;
 
-                score1 = team1.score ? team1.score.value : '';
-                score2 = team2.score ? team2.score.value : '';
-
+                score1 = team1.score ? team1.score.value: '';
+                score2 = team2.score ? team2.score.value: '';
+                
                 logo1 = team1.team.logos;
-                if (logo1 !== undefined) {
-                    logo1 = logo1[0].href;
-                }
-                else {
-                    logo1 = 'https://a.espncdn.com/combiner/i?img=/i/teamlogos/soccer/500/default-team-logo-500.png&w=100&h=100';
-                }
                 logo2 = team2.team.logos;
-                if (logo2 !== undefined) {
-                    logo2 = logo2[0].href;
-                }
-                else {
-                    logo2 = 'https://a.espncdn.com/combiner/i?img=/i/teamlogos/soccer/500/default-team-logo-500.png&w=100&h=100';
-                }
+                
+                var noLogo =  'https://a.espncdn.com/combiner/i?img=/i/teamlogos/soccer/500/default-team-logo-500.png&w=100&h=100';
+                logo1 = (logo1 == undefined)? noLogo : logo1[0].href;
+                logo2 = (logo2 == undefined)? noLogo : logo2[0].href;
+
+                isFinished = !(year==='Upcoming');
                 timeStatus = v.competitions[0].status.type.shortDetail;
+
                 games.push({
                     name1: name1, name2: name2, date: v.date, score1: score1, score2: score2, logo1: logo1,
-                    logo2: logo2, home: team1.id == team, league: v.league.shortName, timeStatus: timeStatus
+                    logo2: logo2, home: team1.id == team, league: v.league.shortName, isFinished: isFinished, timeStatus: timeStatus
                 });
             })
             console.timeEnd('initData');

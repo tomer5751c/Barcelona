@@ -26,12 +26,12 @@ export class GameCardComponent {
   }
   
   onTabOpen(event): void {
-    let id= 'MR0-kfUqvXc';
-    this.game.url = this.dom.bypassSecurityTrustResourceUrl(`https://www.youtube.com/embed/${id}?controls=1`);
-    return;
+    // let id= 'MR0-kfUqvXc';
+    // this.game.url = this.dom.bypassSecurityTrustResourceUrl(`https://www.youtube.com/embed/${id}?controls=1`);
+    // return;
     if(!this.game.url){
       this.data.getVideoGame(this.game).subscribe(res => {
-        id = res['videoId'];
+        let id = res['videoId'];
         this.game.url = this.dom.bypassSecurityTrustResourceUrl(`https://www.youtube.com/embed/${id}?controls=1`);
       });
     }
