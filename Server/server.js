@@ -114,12 +114,12 @@ app.get('/getGames/', function (req, res) {
                 logo1 = (logo1 == undefined)? noLogo : logo1[0].href;
                 logo2 = (logo2 == undefined)? noLogo : logo2[0].href;
 
-                isFinished = !(year==='Upcoming');
+                isOver = !(year==='Upcoming');
                 timeStatus = v.competitions[0].status.type.shortDetail;
 
                 games.push({
                     name1: name1, name2: name2, date: v.date, score1: score1, score2: score2, logo1: logo1,
-                    logo2: logo2, home: team1.id == team, league: v.league.shortName, isFinished: isFinished, timeStatus: timeStatus
+                    logo2: logo2, home: team1.id == team, league: v.league.shortName, isOver: isOver, timeStatus: timeStatus
                 });
             })
             console.timeEnd('initData');
