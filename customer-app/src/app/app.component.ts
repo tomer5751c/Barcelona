@@ -63,7 +63,7 @@ export class AppComponent {
     //     teamID = team.value;
     //   })
     // });
-    
+
     this.games = [];
     var year = this.selectedYear;
     this.data.getGames(this.selectedTeam, year).subscribe(res => {
