@@ -46,10 +46,6 @@ export class AppComponent {
     this.years.push({label: 'year', value: 'Upcoming'});
   }
 
-  onclick(event): void {
-    this.showOption = false;
-  }
-
   getGames(): void {
     this.title = this.selectedTeam;
     this.loading = true;  
