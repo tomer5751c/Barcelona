@@ -20,7 +20,7 @@ export class AppComponent {
   
   groupedTeams: SelectItemGroup[];
   selectedTeam: string;
-
+  selectedTeamName: string;
   selectedCountry: string;
   countriesCodes: any;
 
@@ -29,7 +29,8 @@ export class AppComponent {
     this.loading = true;
 
     this.selectedCountry = 'Spain';
-    this.selectedTeam = 'Barcelona';
+    this.selectedTeamName = 'Barcelona';
+    this.selectedTeam = '83';
     this.selectedYear = 'Upcoming';
     
     this.data.getCountriesFlags().subscribe(res => {
@@ -49,23 +50,23 @@ export class AppComponent {
   onclick(event): void {
     this.showOption = false;
   }
-
+  teamChange(event){
+    this.selectedTeamName = event.originalEvent.toElement.textContent;
+  }
   getGames(): void {
-    this.title = this.selectedTeam;
-    this.loading = true;  
-    
-    //Search for the team ID
-    var teamID = '';
-    this.groupedTeams.forEach(country =>{
-      country.items.forEach(team => {
-        if (team.label === this.selectedTeam) 
-        teamID = team.value;
-      })
-    });
+    this.loading = true;
+    // //Search for the team ID
+    // var teamID = '';
+    // this.groupedTeams.forEach(country =>{
+    //   country.items.forEach(team => {
+    //     if (team.label === this.selectedTeam) 
+    //     teamID = team.value;
+    //   })
+    // });
     
     this.games = [];
     var year = this.selectedYear;
-    this.data.getGames(teamID, year).subscribe(res => {
+    this.data.getGames(this.selectedTeam, year).subscribe(res => {
       this.games = (res);
       this.loading = false;
     });
