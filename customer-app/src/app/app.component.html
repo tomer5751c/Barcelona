@@ -1,9 +1,8 @@
 <div style="justify-content: center; display: flex;">
-  <h1 class='title'>{{selectedTeamName}} Games</h1>
+  <h1 class='title'>{{title}} Games</h1>
 </div>
 <!------ Search Panel ------>
-<div class="searchPanel">
-  <button pButton class="searchText" label="Search Games" icon="pi pi-search"></button>
+<div class="searchPanel">  <button pButton class="searchText" label="Search Games" icon="pi pi-search"></button>
 
   <p-dropdown class="teamDropdown" [(ngModel)]="selectedTeam" [options]="groupedTeams" optionValue="value" optionLabel="label" 
     filter="true" placeholder="Select a Team" group="true" showClear="true" (onChange)="teamChange($event)">

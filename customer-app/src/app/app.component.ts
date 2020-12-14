@@ -38,6 +38,10 @@ export class AppComponent {
       this.initializeTeamsID();
       this.groupedTeams.forEach(v => v.value = this.countriesCodes[v.label]);
       this.getGames();
+    }, error =>{
+      console.log(error);
+      alert('Error in Server Side')
+      this.loading=false;
     });
 
     this.years = [];
@@ -53,16 +57,10 @@ export class AppComponent {
   teamChange(event){
     this.selectedTeamName = event.originalEvent.toElement.textContent;
   }
+
   getGames(): void {
     this.loading = true;
-    // //Search for the team ID
-    // var teamID = '';
-    // this.groupedTeams.forEach(country =>{
-    //   country.items.forEach(team => {
-    //     if (team.label === this.selectedTeam) 
-    //     teamID = team.value;
-    //   })
-    // });
+    this.title = this.selectedTeamName;
 
     this.games = [];
     var year = this.selectedYear;
