@@ -1,11 +1,11 @@
 <div style="justify-content: center; display: flex;">
-  <h1 class='title'>{{selectedTeamName}} Games</h1>
+  <h1 class='title'>{{title}} Games</h1>
 </div>
 <!------ Search Panel ------>
 <div class="searchPanel">
   <button pButton class="searchText" label="Search Games" icon="pi pi-search"></button>
 
-  <p-dropdown class="teamDropdown" [(ngModel)]="selectedTeam" [options]="groupedTeams" optionValue="value" optionLabel="label" 
+  <p-dropdown class="teamDropdown" [(ngModel)]="selectedTeam.value" [options]="groupedTeams"
     filter="true" placeholder="Select a Team" group="true" showClear="true" (onChange)="teamChange($event)">
     <ng-template let-group pTemplate="group">
       <div class="p-d-flex p-ai-center">
@@ -38,9 +38,7 @@
   </ng-template>
 
   <ng-template let-game pTemplate="gridItem">
-    <div class="p-col-5">
       <app-game-card [game]=game></app-game-card>
-    </div>
   </ng-template>
 </p-dataView>
 <!-- End Dataview -->
