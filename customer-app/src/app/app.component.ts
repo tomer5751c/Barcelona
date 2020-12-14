@@ -19,9 +19,8 @@ export class AppComponent {
   selectedYear: string;
   
   groupedTeams: SelectItemGroup[];
-  selectedTeam: string;
-  selectedTeamName: string;
   selectedCountry: string;
+  selectedTeam: SelectItem;
   countriesCodes: any;
 
   constructor(private data: DMLCustomersService) {
@@ -29,8 +28,7 @@ export class AppComponent {
     this.loading = true;
 
     this.selectedCountry = 'Spain';
-    this.selectedTeamName = 'Barcelona';
-    this.selectedTeam = '83';
+    this.selectedTeam = {label: 'Barcelona', value: '83' };
     this.selectedYear = 'Upcoming';
     
     this.data.getCountriesFlags().subscribe(res => {
@@ -50,21 +48,18 @@ export class AppComponent {
     }
     this.years.push({label: 'year', value: 'Upcoming'});
   }
-
-  onclick(event): void {
-    this.showOption = false;
-  }
+  
   teamChange(event){
-    this.selectedTeamName = event.originalEvent.toElement.textContent;
+    this.selectedTeam.label = event.originalEvent.toElement.textContent;
   }
 
   getGames(): void {
     this.loading = true;
-    this.title = this.selectedTeamName;
+    this.title = this.selectedTeam.label;
 
     this.games = [];
     var year = this.selectedYear;
-    this.data.getGames(this.selectedTeam, year).subscribe(res => {
+    this.data.getGames(this.selectedTeam.value, year).subscribe(res => {
       this.games = (res);
       this.loading = false;
     }, error =>{
