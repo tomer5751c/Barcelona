@@ -67,6 +67,10 @@ export class AppComponent {
     this.data.getGames(this.selectedTeam, year).subscribe(res => {
       this.games = (res);
       this.loading = false;
+    }, error =>{
+      console.log(error);
+      alert('Error in Server Side')
+      this.loading=false;
     });
   }
 
