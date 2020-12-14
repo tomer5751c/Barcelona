@@ -20,6 +20,7 @@ app.use(cors());
 var urlencodedParser = bodyParser.urlencoded({ extended: true })
 app.use(urlencodedParser);
 app.use(bodyParser.json());
+
 function connect_To_Mongo_db() {
     return new Promise((resolve, reject) => {
         MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, function (err, db) {
@@ -32,6 +33,7 @@ function connect_To_Mongo_db() {
         })
     });
 }
+
 function insert_To_Db(data) {
     connect_To_Mongo_db().then((result) => {
         if (dbo) {
@@ -47,6 +49,7 @@ function insert_To_Db(data) {
         }
     });
 }
+
 app.get('/countriesFlags/',async function(req,res){
     var countries={};
     var options = {
@@ -169,10 +172,11 @@ function getVideo(teamsString, score, year) {
         order: 'relevance'
     });
 }
+
 app.get('/teamIds/',function(req,res){
     var options = {
         method: 'GET',
-        url:"https://site.web.api.espn.com/apis/site/v2/sports/soccer/ESP.1/teams?region=us&lang=en&limit=10",
+        url:"https://site.web.api.espn.com/apis/site/v2/sports/soccer/ESP.1/teams?region=us&lang=en&limit=20",
         json: true,
         responseType: 'json',
         headers: {
@@ -182,9 +186,9 @@ app.get('/teamIds/',function(req,res){
         }
     };
     var teams=[];
-    faster(options,(err,respo)=>{
-        if(respo){
-            teams=respo.body.sports[0].leagues[0].teams.map(v=>
+    faster(options,(err,res)=>{
+        if(res){
+            teams=res.body.sports[0].leagues[0].teams.map(v=>
                 {return {id:v.team.id,name:v.team.name}}
                 );
             console.log(teams);
@@ -206,21 +210,21 @@ app.get('/teamIds/',function(req,res){
     })
 
 })
-app.post('/insertCustomer/', function (req, res) {
-    console.log((req.body.firstName));
-    
-    res.send(insert_To_Db({ firstName: req.body.firstName, lastName: req.body.lastName }));
-
-    sendmail({
-        from: 'noreply@tmail.com',
-        to: 'tomer5751@hotmail.com',
-        subject: 'test sendmail',
-        html: 'Mail of test sendmail',
-    }, function (err, reply) {
-        console.log(err && err.stack);
-        console.dir(reply);
-    });
-});
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
+// app.post('/insertCustomer/', function (req, res) {
+//     console.log((req.body.firstName));
+    
+//     res.send(insert_To_Db({ firstName: req.body.firstName, lastName: req.body.lastName }));
+
+//     sendmail({
+//         from: 'noreply@tmail.com',
+//         to: 'tomer5751@hotmail.com',
+//         subject: 'test sendmail',
+//         html: 'Mail of test sendmail',
+//     }, function (err, reply) {
+//         console.log(err && err.stack);
+//         console.dir(reply);
+//     });
+// });

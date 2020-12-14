@@ -15,7 +15,8 @@ export class AppComponent {
   showOption = true;
   loading: boolean;
   title: string;
-  
+  titleLogo : string;
+
   years: SelectItem[];
   selectedYear: string;
   
@@ -59,6 +60,7 @@ export class AppComponent {
   getGames(): void {
     this.loading = true;
     this.title = this.selectedTeam.label;
+    this.titleLogo = this.selectedTeam.value;
 
     this.games = [];
     var year = this.selectedYear;

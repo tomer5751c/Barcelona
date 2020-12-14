@@ -45,7 +45,7 @@
 <p-accordion *ngIf="game.isOver" (onOpen)="onTabOpen($event)">
     <p-accordionTab class="accordionHeader" header="Game Summary Video">
             <iframe *ngIf="game.url else noUrl" 
-                width="578.206" height="314.989" [src]="game.url">
+                width="508" height="314.989" [src]="game.url">
             </iframe>
             <ng-template #noUrl>
                 <p-progressSpinner></p-progressSpinner>
