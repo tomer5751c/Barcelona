@@ -36,6 +36,10 @@ export class AppComponent {
       this.initializeTeamsID();
       this.groupedTeams.forEach(v => v.value = this.countriesCodes[v.label]);
       this.getGames();
+    }, error =>{
+      console.log(error);
+      alert('Error in Server Side')
+      this.loading=false;
     });
 
     this.years = [];

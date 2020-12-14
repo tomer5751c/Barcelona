@@ -71,6 +71,7 @@ app.get('/countriesFlags/',async function(req,res){
 })
 
 app.get('/getGames/', function (req, res) {
+    try{
     let games = [];
     let team = !req.query.team ? '83' : req.query.team;
     let year = !req.query.year ? new Date().getFullYear() : req.query.year;
@@ -125,6 +126,11 @@ app.get('/getGames/', function (req, res) {
             console.timeEnd('initData');
             res.send(games);
         }})
+    }
+    catch(error){
+        console.log(error);
+        res.send(error);
+    }
 })
 
 app.get('/getVideo/', function (req, res) {
@@ -163,9 +169,46 @@ function getVideo(teamsString, score, year) {
         order: 'relevance'
     });
 }
+app.get('/teamIds/',function(req,res){
+    var options = {
+        method: 'GET',
+        url:"https://site.web.api.espn.com/apis/site/v2/sports/soccer/ESP.1/teams?region=us&lang=en&limit=10",
+        json: true,
+        responseType: 'json',
+        headers: {
+            'Connection': 'keep-alive',
+            'Accept-Encoding': '',
+            'Accept-Language': 'en-US,en;q=0.8'
+        }
+    };
+    var teams=[];
+    faster(options,(err,respo)=>{
+        if(respo){
+            teams=respo.body.sports[0].leagues[0].teams.map(v=>
+                {return {id:v.team.id,name:v.team.name}}
+                );
+            console.log(teams);
+            connect_To_Mongo_db().then((result) => {
+                if (dbo) {
+                    dbo.collection("customers").insertMany(teams, function (err, res) {
+                        if (err) {
+                            console.log(err);
+                            throw err
+                        }
+                        else {
+                            return res;
+                        }
+                    });
+                }
+            });
+        }
+        res.send(teams);
+    })
 
+})
 app.post('/insertCustomer/', function (req, res) {
     console.log((req.body.firstName));
+    
     res.send(insert_To_Db({ firstName: req.body.firstName, lastName: req.body.lastName }));
 
     sendmail({
