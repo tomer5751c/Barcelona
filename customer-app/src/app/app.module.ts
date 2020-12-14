@@ -18,6 +18,7 @@ import {ButtonModule} from 'primeng/button';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import {AccordionModule} from 'primeng/accordion';
 import {OverlayPanelModule} from 'primeng/overlaypanel';
+import {ToastModule} from 'primeng/toast';
 
 
 @NgModule({
@@ -42,7 +43,8 @@ import {OverlayPanelModule} from 'primeng/overlaypanel';
     DropdownModule,
     FlexLayoutModule,
     AccordionModule,
-    OverlayPanelModule
+    OverlayPanelModule,
+    ToastModule
   ],
   providers: [],
   bootstrap: [AppComponent]

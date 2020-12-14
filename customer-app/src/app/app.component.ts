@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
-import { SelectItem, SelectItemGroup } from 'primeng/api';
+import { SelectItem, SelectItemGroup,MessageService } from 'primeng/api';
 import { DMLCustomersService } from './dmlcustomers.service';
 
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
+  providers: [MessageService]
 })
 
 export class AppComponent {
@@ -23,7 +24,7 @@ export class AppComponent {
   selectedTeam: SelectItem;
   countriesCodes: any;
 
-  constructor(private data: DMLCustomersService) {
+  constructor(private data: DMLCustomersService, public messages: MessageService) {
 
     this.loading = true;
 
@@ -38,7 +39,7 @@ export class AppComponent {
       this.getGames();
     }, error =>{
       console.log(error);
-      alert('Error in Server Side')
+      this.printMessage('Error in Server Side');
       this.loading=false;
     });
 
@@ -48,7 +49,9 @@ export class AppComponent {
     }
     this.years.push({label: 'year', value: 'Upcoming'});
   }
-  
+  printMessage(text){
+    this.messages.add({severity:'error',summary:'Service Message',detail:text});
+  }
   teamChange(event){
     this.selectedTeam.label = event.originalEvent.toElement.textContent;
   }
@@ -64,7 +67,7 @@ export class AppComponent {
       this.loading = false;
     }, error =>{
       console.log(error);
-      alert('Error in Server Side')
+      this.printMessage('Error in Server Side');
       this.loading=false;
     });
   }
