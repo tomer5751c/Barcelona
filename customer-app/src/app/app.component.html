@@ -34,7 +34,7 @@
 
 <!-- Data View -->
 <p-dataView #dataView [value]="games" layout="grid" styleClass="dataviewBG" filterBy="name1" [sortOrder]="sortOrder"
-  sortField="date" [paginator]="games && games.length>0 && !loading" paginatorPosition="both" [rows]="15">
+  sortField="date" [paginator]="games && games.length>0 && !loading" paginatorPosition="bottom" [rows]="14">
 
   <ng-template pTemplate="header"> 
     <p-dropdown #sortDropdown class="sortGames" [(ngModel)]="sortOrder" placeholder="Sort By Date"></p-dropdown>
