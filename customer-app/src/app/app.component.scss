@@ -24,7 +24,7 @@
     border-color: black;
     border-radius: 4rem 0 0 4rem;
     pointer-events: none;
-    border-width: 3px 0px 3px 3px;
+    border-width: 4px;
     box-shadow: none;
     font-family: fantasy;
 }
@@ -33,18 +33,10 @@
     background: #0a0c42eb;
     border-color: black;
     border-radius: 0 4rem 4rem 0;;
-    border-width: 3px;
+    border-width: 4px;
     box-shadow: none;
     font-family: sans-serif;
     font-style: italic;
-}
-
-.teamBorder {
-    border-width: 3px 0px 3px 3px;
-}
-
-.yearBorder {
-    border-width: 3px 0px;
 }
 
 .teamSearch{
@@ -90,13 +82,13 @@
     .panelDropDown {
         background: #0a0c42eb;
         color: black;
-        border: solid;
         padding: 16px;
+        border-top: 4px solid black;
+        border-bottom: 4px solid black;
 
         .p-dropdown {
             background: #525ac3eb;
             border-radius: 10px;
-            border-width: 3px;
             border-color: black;
             
             .p-dropdown-label {
@@ -119,43 +111,48 @@
         .p-dataview-header  {
             display: grid;
             grid-template-columns: 25% auto 25%;
-            border-radius: 12px;
-            margin: 0px 59px;
+            border-radius: 12px 12px 0 0;
+            margin: 0px 16rem;
             background: #ffffffc7;
             align-items: center;
-            border-width: 3px;
+            border-width: 3px 3px 0 3px;
             border-color: black;
         }
         
-        .p-paginator {
-            border-radius: 10rem;
-            background: #ffffffc7;
-            border: 2px solid black;
-        }
-        
         .p-paginator-top {
-            margin: 3rem 57px 2rem 57px;
+            border-radius: 0 0 12px 12px;
+            background: #ffffffc7;
+            border: 3px solid black;
+            border-top: 0;
+            margin: 0 16rem;
         }
+
         .p-paginator-bottom {
             margin: 0 57px;
+            border-radius: 13px;
+            background: #ffffffc7;
+            border: 2px solid black;
         }
 
         .p-paginator {
             .p-paginator-first, .p-paginator-prev, .p-paginator-page, .p-paginator-next, .p-paginator-last{
                 color: black;
+                background: #2196f3;
+                border-radius: 10px;
+                border: solid;
             }
             
             .p-paginator-page.p-highlight {
-                background: #0d8deb;
+                background: #b0ddff;
                 border: solid;
-                border-radius: 10rem;
+                border-radius: 10px;
                 box-shadow: none;
-                color: black;
+                color: #000000;
             }
             
             .p-paginator-element:hover {
                 background: #93d0fe;
-                border-radius: 10rem;
+                border-radius: 10px;
             }
         }
 
