@@ -127,18 +127,17 @@
             border-color: black;
         }
         
-        .p-paginator-top {
-            margin: 3rem 57px 2rem 57px;
+        .p-paginator {
             border-radius: 10rem;
             background: #ffffffc7;
             border: 2px solid black;
         }
         
-        .p-paginator-bottom{
-            border-radius: 10rem;
-            background: #ffffffc7;
+        .p-paginator-top {
+            margin: 3rem 57px 2rem 57px;
+        }
+        .p-paginator-bottom {
             margin: 0 57px;
-            border: 2px solid black;
         }
 
         .p-paginator {
