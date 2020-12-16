@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { SelectItem, SelectItemGroup, MessageService } from 'primeng/api';
 import { DataViewModule } from 'primeng/dataview';
-import { InputText, InputTextModule } from 'primeng/inputtext';
+import { Dropdown } from 'primeng/dropdown';
 import { DMLCustomersService } from './dmlcustomers.service';
 
 
@@ -14,6 +14,8 @@ import { DMLCustomersService } from './dmlcustomers.service';
 
 export class AppComponent {
   @ViewChild('dataView') dataView;
+  @ViewChild('sortDropdown') sortDropdown;
+  
   games: any;
   showOption = true;
   loading: boolean;
@@ -30,7 +32,8 @@ export class AppComponent {
   countriesCodes: any;
 
   searchInput: string;
-  sortOptions: SelectItem[];
+  sortOptions1: SelectItem[];
+  sortOptions2: SelectItem[];
   sortOrder: number;
 
   constructor(private data: DMLCustomersService, public messages: MessageService) {
@@ -59,9 +62,13 @@ export class AppComponent {
   }
 
   ngOnInit() {
-    this.sortOptions = [
+    this.sortOptions1 = [
+      { label: 'Closest games first', value: 1 },
+      { label: 'Latest games first', value: -1 }
+    ];
+    this.sortOptions2 = [
       { label: 'Latest games first', value: -1 },
-      { label: 'Oldest games first', value: 1 }
+      { label: 'Oldest games first', value:  1 }
     ];
   }
 
@@ -78,12 +85,18 @@ export class AppComponent {
     this.searchInput = '';
     this.sortOrder = 0;
     this.loading = true;
-
+    
     this.title = this.selectedTeam.label;
     this.titleLogo = this.selectedTeam.value;
-
+    
     this.games = [];
     var year = this.selectedYear;
+    
+    if (this.selectedYear === 'Upcoming')
+      this.sortDropdown.options = this.sortOptions1;
+    else
+      this.sortDropdown.options = this.sortOptions2;
+    
     this.data.getGames(this.selectedTeam.value, year).subscribe(res => {
       this.games = (res);
       this.loading = false;

@@ -37,7 +37,7 @@
   sortField="date" [paginator]="games && games.length>0 && !loading" paginatorPosition="both" [rows]="15">
 
   <ng-template pTemplate="header"> 
-    <p-dropdown class="sortGames" [options]="sortOptions" [(ngModel)]="sortOrder" placeholder="Sort By Date"></p-dropdown>
+    <p-dropdown #sortDropdown class="sortGames" [(ngModel)]="sortOrder" placeholder="Sort By Date"></p-dropdown>
 
     <span class="p-input-icon-left" style="justify-self: center;">
       <i class="pi pi-search"></i>
