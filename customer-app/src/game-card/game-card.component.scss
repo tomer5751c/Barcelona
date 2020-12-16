@@ -3,13 +3,14 @@
     border-radius: 12px 12px 0 0;
     padding: 20px 2rem;
     background: #ffffffc7;
-    color: #000000;
+    color: hsl(0, 0%, 0%);
     width: 32rem;
 }
 
 .noAccordion {
     border-radius: 12px;
     margin-bottom: 50px;
+    border: 2px solid black;
 }
 
 .product-grid-header {

@@ -82,7 +82,7 @@
         width: 14rem;
     } 
 
-    .getGamesBtn .p-button:enabled:hover {
+    .getGamesBtn:hover {
         background: #d5d2ffeb;
         border-color: black;
     }
@@ -131,17 +131,32 @@
             margin: 3rem 57px 2rem 57px;
             border-radius: 10rem;
             background: #ffffffc7;
+            border: 2px solid black;
         }
         
         .p-paginator-bottom{
             border-radius: 10rem;
             background: #ffffffc7;
             margin: 0 57px;
+            border: 2px solid black;
         }
 
         .p-paginator {
             .p-paginator-first, .p-paginator-prev, .p-paginator-page, .p-paginator-next, .p-paginator-last{
                 color: black;
+            }
+            
+            .p-paginator-page.p-highlight {
+                background: #0d8deb;
+                border: solid;
+                border-radius: 10rem;
+                box-shadow: none;
+                color: black;
+            }
+            
+            .p-paginator-element:hover {
+                background: #93d0fe;
+                border-radius: 10rem;
             }
         }
 
