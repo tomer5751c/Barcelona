@@ -1,7 +1,9 @@
 <p-toast position="center"></p-toast>
+
 <div style="justify-content: center; display: flex;">
   <h1 class='title'>
-    <img src="https://a.espncdn.com/i/teamlogos/soccer/500/{{titleLogo}}.png" width="50px" height="50px" style="vertical-align: sub;">
+    <img src="https://a.espncdn.com/i/teamlogos/soccer/500/{{titleLogo}}.png" width="50px" height="50px"
+      style="vertical-align: sub;">
     {{title}} Games
   </h1>
 </div>
@@ -10,8 +12,8 @@
 <div class="searchPanel">
   <button pButton class="searchText" label="Search Games" icon="pi pi-search"></button>
 
-  <p-dropdown class="teamDropdown" [(ngModel)]="selectedTeam.value" [options]="groupedTeams"
-    filter="true" placeholder="Select a Team" group="true" showClear="true" (onChange)="teamChange($event)">
+  <p-dropdown class="panelDropDown panelWidth" [(ngModel)]="selectedTeam.value" [options]="groupedTeams" filter="true"
+    placeholder="Select a Team" group="true" showClear="true" (onChange)="teamChange($event)">
     <ng-template let-group pTemplate="group">
       <div class="p-d-flex p-ai-center">
         <img src="https://flagcdn.com/16x12/{{group.value}}.png" [class]="'p-mr-2 flag flag-'" style="width: 20px" />
@@ -20,31 +22,40 @@
     </ng-template>
   </p-dropdown>
 
-  <p-dropdown ariaFilterLabel="test" class="yearDropdown" [options]="years" [(ngModel)]="selectedYear"
-    placeholder="Select a Year" optionLabel="value" showClear="true">
+  <p-dropdown class="panelDropDown yearBorder" [options]="years" [(ngModel)]="selectedYear" placeholder="Select a Year"
+    optionLabel="value" showClear="true">
   </p-dropdown>
 
-  <button pButton class="getGamesBtn" [disabled]="!selectedYear || !selectedTeam.label" type="button" 
-    label="Get Games" (click)=getGames() icon="pi pi-chevron-right" iconPos="right">
+  <button pButton class="getGamesBtn" [disabled]="!selectedYear || !selectedTeam.label" type="button" label="Get Games"
+    (click)=getGames() icon="pi pi-chevron-right" iconPos="right">
   </button>
-</div> 
+</div>
 <!--- End Panel-->
 
 <!-- Data View -->
-<p-dataView [value]="games" layout="grid" styleClass="dataviewBG" [paginator]="games && games.length>0 && !loading" [rows]="15" >
-  <p-header *ngIf='!loading'>
-    <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
-  </p-header>
+<p-dataView #dataView [value]="games" layout="grid" styleClass="dataviewBG" filterBy="name1" [sortOrder]="sortOrder"
+  sortField="date" [paginator]="games && games.length>0 && !loading" paginatorPosition="both" [rows]="15">
+
+  <ng-template pTemplate="header"> 
+    <p-dropdown class="sortGames" [options]="sortOptions" [(ngModel)]="sortOrder" placeholder="Sort By Date"></p-dropdown>
+
+    <span class="p-input-icon-left" style="justify-self: center;">
+      <i class="pi pi-search"></i>
+      <input class="teamSearch" type="search" [(ngModel)]="searchInput" pInputText placeholder="Search by Team"
+        (input)="dataView.filter($event.target.value)">
+    </span>
+
+    <p-dataViewLayoutOptions class="viewButtons"></p-dataViewLayoutOptions>
+  </ng-template>
 
   <ng-template let-game pTemplate="listItem">
-    <div class="p-col-4">
-      <app-game-card [game]=game></app-game-card>
-    </div>
+    <app-game-card [game]=game></app-game-card>
   </ng-template>
 
   <ng-template let-game pTemplate="gridItem">
-      <app-game-card [game]=game></app-game-card>
+    <app-game-card [game]=game></app-game-card>
   </ng-template>
+ 
 </p-dataView>
 <!-- End Dataview -->
 

@@ -39,67 +39,111 @@
     font-style: italic;
 }
 
-.teamDropdown {
-   background: #0a0c42eb;
-   color: black;
-   border: solid;
-   border-width: 3px 0px 3px 3px;
-   padding: 16px;
+.teamBorder {
+    border-width: 3px 0px 3px 3px;
 }
 
-.yearDropdown {
-    background: #0a0c42eb;
-    color: black;
-    border: solid;
-    border-width: 3px 0;
-    padding: 16px;
+.yearBorder {
+    border-width: 3px 0px;
+}
+
+.teamSearch{
+    border-color: #080841;
+    border-width: 3px;
+    border-radius: 20px;
 }
 
 :host ::ng-deep {
-    
-    .p-dropdown {
-        background: #525ac3eb;
-        border-radius: 10px;
+
+    .sortGames .p-dropdown {
+        border-color: #080841;
         border-width: 3px;
-        border-color: black;
-        
-        .p-dropdown-label {
-            color: white;
+        border-radius: 10px;
+    }
+
+    .viewButtons {
+        justify-self: end;
+
+        .p-button {
+            border-color: #080841;
+            box-shadow: none;
+        }
+        .p-button:last-of-type {
+            border-width: 3px 3px 3px 0;
+            border-radius: 0 10px 10px 0;
+        }
+        .p-button:first-of-type {
+            border-width: 3px 0 3px 3px;
+            border-radius: 10px 0px 0px 10px;
         }
     }
     
-    .teamDropdown {
+    .panelWidth .p-dropdown {
+        width: 14rem;
+    } 
+
+    .getGamesBtn .p-button:enabled:hover {
+        background: #d5d2ffeb;
+        border-color: black;
+    }
+
+    .panelDropDown {
+        background: #0a0c42eb;
+        color: black;
+        border: solid;
+        padding: 16px;
+
         .p-dropdown {
-            width: 14rem; 
+            background: #525ac3eb;
+            border-radius: 10px;
+            border-width: 3px;
+            border-color: black;
+            
+            .p-dropdown-label {
+                color: white;
+            }
+        }
+        .p-dropdown:not(.p-disabled):hover{
+            background: #d5d2ffeb;
+            border-color: black;
+        }
+        .p-dropdown:not(.p-disabled).p-focus {
+            border-color: transparent;
+            box-shadow: none;
         }
     }
-    
-    .p-dropdown:not(.p-disabled):hover {
-        background: #d5d2ffeb;
-        border-color: black;
-    }
-    .p-dropdown:not(.p-disabled).p-focus{
-        border-color: transparent;
-        box-shadow: none;
-    }
-    .p-button:enabled:hover {
-        background: #d5d2ffeb;
-        border-color: black;
-    }
-    
-    .prime-slider-override {
-        .p-progress-spinner-svg {
-            position: fixed;
-            width: 20%;
-            margin-top: 20px;
-        }
-    }    
-    
-    .dataviewBG {
-        
+
+    .dataviewBG {   
+        margin: 1rem 0 9rem 0;
+
         .p-dataview-header  {
-            background: transparent;
-            border: none;
+            display: grid;
+            grid-template-columns: 25% auto 25%;
+            border-radius: 12px 12px 0 0;
+            margin: 0px 59px;
+            background: #00000073;
+            align-items: center;
+            border-width: 2px 2px 0px 2px;
+        }
+        
+        .p-paginator-top {
+            border-radius: 0 0 12px 12px;
+            margin: 0 59px 2rem 59px;
+            background: #00000073;
+            border-width: 0px 2px 2px 2px;
+        }
+        
+        .p-paginator-bottom {
+            background: #00000073;
+            margin: 0 59px;
+            border-radius: 5rem;
+            border-width: 2px;
+        }
+
+        .p-paginator {
+            .p-paginator-first, .p-paginator-prev, .p-paginator-page, .p-paginator-next, .p-paginator-last{
+                color: white;
+            }
         }
 
         .p-dataview-content {
@@ -114,13 +158,14 @@
                 }
             }
         }
-
-        .p-paginator-bottom {
-            margin-bottom: 9rem;
-            background: #ffffffd7;
-            border-color: black;
-            border-width: 4px 0;
-            border-radius: 10p;
-        }
     }
+        
+    .prime-slider-override {
+        .p-progress-spinner-svg {
+            position: fixed;
+            width: 20%;
+            margin-top: 20px;
+        }
+    }    
+    
 }
