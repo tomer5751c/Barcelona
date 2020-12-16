@@ -119,30 +119,29 @@
         .p-dataview-header  {
             display: grid;
             grid-template-columns: 25% auto 25%;
-            border-radius: 12px 12px 0 0;
+            border-radius: 12px;
             margin: 0px 59px;
-            background: #00000073;
+            background: #ffffffc7;
             align-items: center;
-            border-width: 2px 2px 0px 2px;
+            border-width: 3px;
+            border-color: black;
         }
         
         .p-paginator-top {
-            border-radius: 0 0 12px 12px;
-            margin: 0 59px 2rem 59px;
-            background: #00000073;
-            border-width: 0px 2px 2px 2px;
+            margin: 3rem 57px 2rem 57px;
+            border-radius: 10rem;
+            background: #ffffffc7;
         }
         
-        .p-paginator-bottom {
-            background: #00000073;
-            margin: 0 59px;
-            border-radius: 5rem;
-            border-width: 2px;
+        .p-paginator-bottom{
+            border-radius: 10rem;
+            background: #ffffffc7;
+            margin: 0 57px;
         }
 
         .p-paginator {
             .p-paginator-first, .p-paginator-prev, .p-paginator-page, .p-paginator-next, .p-paginator-last{
-                color: white;
+                color: black;
             }
         }
 
@@ -164,7 +163,7 @@
         .p-progress-spinner-svg {
             position: fixed;
             width: 20%;
-            margin-top: 20px;
+            margin-top: 3rem;
         }
     }    
     
