@@ -5,7 +5,10 @@
             <div *ngIf="game.timeStatus!=='TBC' && !game.isOver"  
                 class="time"> {{game.date| date:"EEE"}} {{game.date| date:"HH:mm"}} </div>
         </div>
-        <div class="league">{{game.league}} </div>
+        <div style="text-align: center; align-self: flex-start;">
+            <div class="league">{{game.league}} </div>
+            <div class="stage">{{game.stage}}</div>
+        </div>
         <div *ngIf="game.home else elseBlock" class="material-icons homeAwayIcon">
             house
         </div>
@@ -24,7 +27,7 @@
         <div class="score">
             {{game.score1}}
         </div>
-        <div *ngIf="game.isOver else vsBlock" class="score" style="margin-bottom: 13px;">
+        <div *ngIf="game.isOver else vsBlock" class="score" style="margin-bottom: 21px;">
             -
         </div>
         <ng-template #vsBlock>

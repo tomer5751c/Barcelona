@@ -36,17 +36,17 @@
 <p-dataView #dataView [value]="games" layout="grid" styleClass="dataviewBG" filterBy="name1" [sortOrder]="sortOrder"
   sortField="date" [paginator]="games && games.length>0 && !loading" paginatorPosition="both" [rows]="14">
 
-  <ng-template pTemplate="header"> 
-    <p-dropdown #sortDropdown class="sortGames" [(ngModel)]="sortOrder" placeholder="Sort By Date"></p-dropdown>
-
+  <p-header class="filterPanel" *ngIf="games && games.length>0 && !loading"> 
+    <p-dropdown #sortDropdown class="sortGames" [(ngModel)]="sortOrder" [options]="sortOptions" placeholder="Sort By Date"></p-dropdown>
+    
     <span class="p-input-icon-left" style="justify-self: center;">
       <i class="pi pi-search"></i>
       <input class="teamSearch" type="search" [(ngModel)]="searchInput" pInputText placeholder="Search by Team"
-        (input)="dataView.filter($event.target.value)">
+      (input)="dataView.filter($event.target.value)">
     </span>
-
+    
     <p-dataViewLayoutOptions class="viewButtons"></p-dataViewLayoutOptions>
-  </ng-template>
+  </p-header>
 
   <ng-template let-game pTemplate="listItem">
     <app-game-card [game]=game></app-game-card>

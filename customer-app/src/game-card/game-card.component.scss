@@ -43,11 +43,17 @@
     color: #000000ad;
 }
 
-.league{
+.league {
     font-style: italic;
     font-family: 'Alegreya';
     font-size: 19px;
     justify-self: center;
+}
+
+.stage {
+    font-family: sans-serif;
+    color: #000000ab;
+    margin-top: 2px;
 }
 
 .homeAwayIcon {
@@ -72,6 +78,7 @@
     font-size: 49px;
     color: #231b1b;
     font-family: serif;
+    margin-bottom: 12px;
 }
 
 .accordionHeader {

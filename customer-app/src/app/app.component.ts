@@ -15,9 +15,8 @@ import { DMLCustomersService } from './dmlcustomers.service';
 export class AppComponent {
   @ViewChild('dataView') dataView;
   @ViewChild('sortDropdown') sortDropdown;
-  
+
   games: any;
-  showOption = true;
   loading: boolean;
 
   title: string;
@@ -32,6 +31,7 @@ export class AppComponent {
   countriesCodes: any;
 
   searchInput: string;
+  sortOptions:  SelectItem[];
   sortOptions1: SelectItem[];
   sortOptions2: SelectItem[];
   sortOrder: number;
@@ -68,7 +68,7 @@ export class AppComponent {
     ];
     this.sortOptions2 = [
       { label: 'Latest games first', value: -1 },
-      { label: 'Oldest games first', value:  1 }
+      { label: 'Oldest games first', value: 1 }
     ];
   }
 
@@ -85,17 +85,15 @@ export class AppComponent {
     this.searchInput = '';
     this.sortOrder = 0;
     this.loading = true;
-    
+
     this.title = this.selectedTeam.label;
     this.titleLogo = this.selectedTeam.value;
-    
+
     this.games = [];
     var year = this.selectedYear;
+
+    this.sortOptions = (this.selectedYear === 'Upcoming')? this.sortOptions1 : this.sortOptions2;
     
-    if (this.selectedYear === 'Upcoming')
-      this.sortDropdown.options = this.sortOptions1;
-    else
-      this.sortDropdown.options = this.sortOptions2;
     
     this.data.getGames(this.selectedTeam.value, year).subscribe(res => {
       this.games = (res);
@@ -115,6 +113,8 @@ export class AppComponent {
           { label: 'Barcelona', value: '83' },
           { label: 'Real Madrid', value: '86' },
           { label: 'Atletico Madrid', value: '1068' },
+          { label: 'Villarreal', value: '102' },
+          { label: 'Real Sociedad', value: '89' },
         ]
       },
       {

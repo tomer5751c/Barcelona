@@ -122,9 +122,15 @@ app.get('/getGames/', function (req, res) {
                     isOver = !(year === 'Upcoming');
                     timeStatus = v.competitions[0].status.type.shortDetail;
 
+                    var stage = '';
+                    str = (v.seasonType.name.toLowerCase());
+                    if (str.includes('final') || str.includes('round') || str.includes('group'))
+                        stage = v.seasonType.name; 
+
                     games.push({
                         name1: name1, name2: name2, date: v.date, score1: score1, score2: score2, logo1: logo1,
-                        logo2: logo2, home: team1.id == team, league: v.league.shortName, isOver: isOver, timeStatus: timeStatus
+                        logo2: logo2, home: team1.id == team, league: v.league.shortName, stage: stage,
+                        isOver: isOver, timeStatus: timeStatus
                     });
                 })
                 console.timeEnd('initData');
