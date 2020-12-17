@@ -94,7 +94,6 @@ export class AppComponent {
 
     this.sortOptions = (this.selectedYear === 'Upcoming')? this.sortOptions1 : this.sortOptions2;
     
-    
     this.data.getGames(this.selectedTeam.value, year).subscribe(res => {
       this.games = (res);
       this.loading = false;
