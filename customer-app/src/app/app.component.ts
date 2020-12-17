@@ -16,7 +16,7 @@ export class AppComponent {
   @ViewChild('dataView') dataView;
   @ViewChild('sortDropdown') sortDropdown;
 
-  games: any;
+  games: any = [];
   loading: boolean;
 
   title: string;
