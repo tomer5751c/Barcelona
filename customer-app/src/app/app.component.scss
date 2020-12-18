@@ -2,9 +2,9 @@
     font-size: 46px;
     font-family: 'Alegreya', serif;
     font-style: italic;
-    background-color: #d9dcd7;
+    background-color: #ffffffc7;
     color: #0c360d;
-    border: solid;
+    border: 2px solid;
     border-radius: 10px;
     padding: 0px 11px;
     width: fit-content;
@@ -15,8 +15,10 @@
     display: flex;
     position: fixed;
     bottom: 1rem;
-    left: 22%;
     z-index: 10;
+    width: 47rem;
+    left: 51%;
+    transform: translateX(-50%);
 }
 
 .searchText{
@@ -106,7 +108,7 @@
     }
 
     .dataviewBG {   
-        margin: 1rem 0 9rem 0;
+        margin: 2rem 0 9rem 0;
 
         .p-dataview-header  {
             border-radius: 12px 12px 0 0;
