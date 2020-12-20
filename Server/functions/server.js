@@ -1,16 +1,17 @@
-var bodyParser = require('body-parser')
-var { google } = require('googleapis');
-const faster = require('req-fast');
+const functions = require('firebase-functions');
 const express = require('express')
-var cors = require('cors')
-var fs = require('fs');
 const app = express()
-const port = 3000
+var fs = require('fs');
+var cors = require('cors')
+var firebase = require('firebase')
+const faster = require('req-fast');
+var bodyParser = require('body-parser')
+const { google } = require('googleapis');
 
 // var MongoClient = require('mongodb').MongoClient;
 // var url = "mongodb+srv://tomerc:5751tomC*@my-db-o26ig.mongodb.net/test?retryWrites=true&useNewUrlParser=true";
-// create application/x-www-form-urlencoded parser
-// var transporter = nodemailer.createTransport();
+// var dbo;
+// const port = 3000
 
 app.use(cors());
 var urlencodedParser = bodyParser.urlencoded({ extended: true })
@@ -60,7 +61,6 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig)
 let database = firebase.database()
 
-
 app.get('/countriesFlags/', async function (req, res) {
     var countries = {};
     var options = {
@@ -104,7 +104,7 @@ app.get('/getGames/', function (req, res) {
                 'Accept-Language': 'en-US,en;q=0.8'
             }
         };
-        
+
         var t = console.time('getData');
         faster(options, (err, respo) => {
             if (respo) {
@@ -136,7 +136,7 @@ app.get('/getGames/', function (req, res) {
                     var stage = '';
                     str = (v.seasonType.name.toLowerCase());
                     if (str.includes('final') || str.includes('round') || str.includes('group'))
-                        stage = v.seasonType.name; 
+                        stage = v.seasonType.name;
 
                     games.push({
                         name1: name1, name2: name2, date: v.date, score1: score1, score2: score2, logo1: logo1,
@@ -223,20 +223,8 @@ app.get('/teamIds/', function (req, res) {
     })
 })
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+exports.app = functions.https.onRequest(app);
 
-// app.post('/insertCustomer/', function (req, res) {
-//     console.log((req.body.firstName));
+//app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 
-//     res.send(insert_To_Db({ firstName: req.body.firstName, lastName: req.body.lastName }));
 
-//     sendmail({
-//         from: 'noreply@tmail.com',
-//         to: 'tomer5751@hotmail.com',
-//         subject: 'test sendmail',
-//         html: 'Mail of test sendmail',
-//     }, function (err, reply) {
-//         console.log(err && err.stack);
-//         console.dir(reply);
-//     });
-// });

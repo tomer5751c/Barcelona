@@ -5,13 +5,13 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class DMLCustomersService {
-  url = 'http://localhost:3000';
+  url = 'https://us-central1-football-games-project.cloudfunctions.net/app';
   constructor(private http: HttpClient) { }
   // tslint:disable-next-line:typedef
   insertCustomer(body) {
     console.log('in servicce');
     try{
-      this.http.post('http://localhost:3000/insertCustomer/', body).toPromise().then(res=>{
+      this.http.post('https://us-central1-football-games-project.cloudfunctions.net/app/insertCustomer/', body).toPromise().then(res=>{
         console.log(res);
       }).catch(err => {
         console.log(err);
