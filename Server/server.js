@@ -2,20 +2,19 @@ var bodyParser = require('body-parser')
 var { google } = require('googleapis');
 const faster = require('req-fast');
 const express = require('express')
+var firebase = require('firebase')
 var cors = require('cors')
 var fs = require('fs');
 const app = express()
+var url = "mongodb+srv://tomerc:5751tomC*@my-db-o26ig.mongodb.net/test?retryWrites=true&useNewUrlParser=true";
+var MongoClient = require('mongodb').MongoClient;
+const { promises } = require('dns');
+const { log } = require('console');
 const port = 3000
 
-// var MongoClient = require('mongodb').MongoClient;
-// var url = "mongodb+srv://tomerc:5751tomC*@my-db-o26ig.mongodb.net/test?retryWrites=true&useNewUrlParser=true";
+
 // create application/x-www-form-urlencoded parser
 // var transporter = nodemailer.createTransport();
-
-app.use(cors());
-var urlencodedParser = bodyParser.urlencoded({ extended: true })
-app.use(urlencodedParser);
-app.use(bodyParser.json());
 
 // function connect_To_Mongo_db() {
 //     return new Promise((resolve, reject) => {
@@ -60,6 +59,10 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig)
 let database = firebase.database()
 
+app.use(cors());
+var urlencodedParser = bodyParser.urlencoded({ extended: true })
+app.use(urlencodedParser);
+app.use(bodyParser.json());
 
 app.get('/countriesFlags/', async function (req, res) {
     var countries = {};
@@ -81,6 +84,7 @@ app.get('/countriesFlags/', async function (req, res) {
         var body = JSON.parse(data);
         Object.keys(body).forEach(v => countries[body[v]] = v);
         res.send(countries);
+        console.log(countries);
     })
 })
 
@@ -104,7 +108,7 @@ app.get('/getGames/', function (req, res) {
                 'Accept-Language': 'en-US,en;q=0.8'
             }
         };
-        
+
         var t = console.time('getData');
         faster(options, (err, respo) => {
             if (respo) {
@@ -136,7 +140,7 @@ app.get('/getGames/', function (req, res) {
                     var stage = '';
                     str = (v.seasonType.name.toLowerCase());
                     if (str.includes('final') || str.includes('round') || str.includes('group'))
-                        stage = v.seasonType.name; 
+                        stage = v.seasonType.name;
 
                     games.push({
                         name1: name1, name2: name2, date: v.date, score1: score1, score2: score2, logo1: logo1,
@@ -156,23 +160,17 @@ app.get('/getGames/', function (req, res) {
 })
 
 app.get('/getVideo/', function (req, res) {
-    console.log(req.query);
     let teamsString = req.query.teamString;
     let score = req.query.score;
     let year = req.query.year;
-    console.log('score:', score);
-    console.log('teamsString:', teamsString);
 
     getVideo(teamsString, score, year).then(result => {
-        console.log('here');
         const items = result.data.items;
         if (items.length > 0) {
             let videoId = items[0].id.videoId;
-            console.log(videoId);
             res.send({ videoId: videoId });
         }
         else {
-            console.log('empty');
             res.send({ videoId: '' });
         }
 
@@ -192,10 +190,42 @@ function getVideo(teamsString, score, year) {
     });
 }
 
-app.get('/teamIds/', function (req, res) {
+app.get('/saveTeams/', function (req, appRes) {
+
+    var countries = {};
+    var countriesNames = ['Spain', 'England', 'France', 'Germany', 'Italy'];
+    var leagues        = ['ESP.1', 'ENG.1',   'FRA.1',  'GER.1',   'ITA.1'];
+    
+    var PromiseArr = [];
+    for (let i = 0; i < leagues.length; i++) {
+        PromiseArr.push(promisesObj(leagues[i], countriesNames[i]));
+    }
+
+    Promise.all(PromiseArr).then(res => {
+        for (r of res) {
+            countries[r.name] = { teams: r.teams, league: r.league };
+        }
+
+        //Insert teams into firebase
+        database.ref("countries/").set(countries, function (error) {
+            if (error)
+                appRes.send("Failed with error: " + error)
+            else
+                appRes.send("Teams added successfully!");
+        })
+
+    }).catch(err => {
+        console.log(err);
+        appRes.send("Failed with error: " + err)
+    })
+})
+
+function promisesObj(league, country) {
+
     var options = {
         method: 'GET',
-        url: "https://site.web.api.espn.com/apis/site/v2/sports/soccer/ESP.1/teams?region=us&lang=en&limit=20",
+        url: "https://site.web.api.espn.com/apis/site/v2/sports/soccer/" + league
+            + "/teams?region=us&lang=en&limit=10",
         json: true,
         responseType: 'json',
         headers: {
@@ -204,26 +234,36 @@ app.get('/teamIds/', function (req, res) {
             'Accept-Language': 'en-US,en;q=0.8'
         }
     };
-    var teams = [];
-    faster(options, (err, res) => {
-        if (res) {
-            teams = res.body.sports[0].leagues[0].teams.map(v => { return { id: v.team.id, name: v.team.name } }
-            );
-            console.log(teams);
-        }
 
-        //Insert teams into firebase
-        database.ref("teams/").set(teams, function (error) {
-            if (!error) {
-                appRes.send("Teams added successfully")
-            } else {
-                appRes.send("Failed with error: " + error)
+    return new Promise((resolve, reject) => {
+        faster(options, (err, res) => {
+            
+            if (res) {
+                var teams = res.body.sports[0].leagues[0].teams.map(v => { return { id: v.team.id, name: v.team.name } });
+                var countryJson = { name: country, teams: teams, league: league };
+                resolve(countryJson);
             }
         })
     })
+}
+
+app.get('/getTeams/', function (req, res) {
+    // var country = req.query.country;
+    // var ref = database.ref(`countries/${country}/teams`);
+    var ref = database.ref('countries');
+
+    // Attach an asynchronouss callback to read the data at our posts reference
+    ref.once("value", function (snapshot) {
+        res.send(snapshot.val());
+        console.log(snapshot.val());
+    }, function (errorObject) {
+        console.log("The read failed: " + errorObject.code);
+    });
 })
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+
+
 
 // app.post('/insertCustomer/', function (req, res) {
 //     console.log((req.body.firstName));
