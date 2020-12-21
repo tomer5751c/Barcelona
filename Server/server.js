@@ -239,7 +239,7 @@ function promisesObj(league, country) {
         faster(options, (err, res) => {
             
             if (res) {
-                var teams = res.body.sports[0].leagues[0].teams.map(v => { return { id: v.team.id, name: v.team.name } });
+                var teams = res.body.sports[0].leagues[0].teams.map(v => { return { value: v.team.id, label: v.team.name } });
                 var countryJson = { name: country, teams: teams, league: league };
                 resolve(countryJson);
             }

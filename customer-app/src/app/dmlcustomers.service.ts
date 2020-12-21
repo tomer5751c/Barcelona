@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class DMLCustomersService {
-  url = 'https://us-central1-football-games-project.cloudfunctions.net/app';
+  url = 'http://localhost:3000';
   constructor(private http: HttpClient) { }
   // tslint:disable-next-line:typedef
   insertCustomer(body) {
@@ -31,6 +31,10 @@ export class DMLCustomersService {
   // tslint:disable-next-line:typedef
   getGames(team, year){
     return this.http.get(this.url + '/getGames/?team=' + team + '&year=' + year);
+  }
+  // tslint:disable-next-line:typedef
+  getTeams(){
+    return this.http.get(this.url + '/getTeams/');
   }
   // tslint:disable-next-line:typedef
   getVideoGame(game){

@@ -45,8 +45,11 @@ export class AppComponent {
 
     this.data.getCountriesFlags().subscribe(res => {
       this.countriesCodes = res;
-      this.initializeTeamsID();
-      this.groupedTeams.forEach(v => v.value = this.countriesCodes[v.label]);
+      this.data.getTeams().subscribe(teams => {
+        this.groupedTeams = Object.keys(teams).map(v=>{return {label:v,items:teams[v].teams}})
+        debugger
+        this.groupedTeams.forEach(v => v.value = this.countriesCodes[v.label]);
+      });
       this.getGames();
     }, error => {
       console.log(error);
