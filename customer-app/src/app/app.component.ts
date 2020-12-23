@@ -1,7 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
 import { SelectItem, SelectItemGroup, MessageService } from 'primeng/api';
-import { DataViewModule } from 'primeng/dataview';
-import { Dropdown } from 'primeng/dropdown';
 import { DMLCustomersService } from './dmlcustomers.service';
 
 
@@ -14,7 +12,6 @@ import { DMLCustomersService } from './dmlcustomers.service';
 
 export class AppComponent {
   @ViewChild('dataView') dataView;
-  @ViewChild('sortDropdown') sortDropdown;
 
   games: any = [];
   loading: boolean;
@@ -27,11 +24,11 @@ export class AppComponent {
 
   groupedTeams: SelectItemGroup[];
   selectedCountry: string;
-  selectedTeam: SelectItem;
+  selectedTeam: string;
   countriesCodes: any;
 
   searchInput: string;
-  sortOptions:  SelectItem[];
+  sortOptions: SelectItem[];
   sortOptions1: SelectItem[];
   sortOptions2: SelectItem[];
   sortOrder: number;
@@ -40,16 +37,13 @@ export class AppComponent {
     this.loading = true;
 
     this.selectedCountry = 'Spain';
-    this.selectedTeam = { label: 'Barcelona', value: '83' };
+    this.selectedTeam = '83';
     this.selectedYear = 'Upcoming';
 
-    this.data.getCountriesFlags().subscribe(res => {
-      this.countriesCodes = res;
-      this.data.getTeams().subscribe(teams => {
-        this.groupedTeams = Object.keys(teams).map(v=>{return {label:v,items:teams[v].teams}})
-        debugger
-        this.groupedTeams.forEach(v => v.value = this.countriesCodes[v.label]);
-      });
+    console.time('startCountries');
+    this.data.getTeams().subscribe(countries => {
+      console.timeEnd('startCountries');
+      this.groupedTeams = Object.keys(countries).reverse().map(v => ({ value: countries[v].code, label: v, items: countries[v].teams }));
       this.getGames();
     }, error => {
       console.log(error);
@@ -64,7 +58,8 @@ export class AppComponent {
     this.years.push({ label: 'year', value: 'Upcoming' });
   }
 
-  ngOnInit() {
+  // tslint:disable-next-line:use-lifecycle-interface
+  ngOnInit(): void {
     this.sortOptions1 = [
       { label: 'Closest games first', value: 1 },
       { label: 'Latest games first', value: -1 }
@@ -75,12 +70,8 @@ export class AppComponent {
     ];
   }
 
-  printMessage(text) {
+  printMessage(text): void {
     this.messages.add({ severity: 'error', summary: 'Service Message', detail: text });
-  }
-
-  teamChange(event) {
-    this.selectedTeam.label = event.originalEvent.toElement.textContent;
   }
 
   getGames(): void {
@@ -89,15 +80,15 @@ export class AppComponent {
     this.sortOrder = 0;
     this.loading = true;
 
-    this.title = this.selectedTeam.label;
-    this.titleLogo = this.selectedTeam.value;
+    this.titleLogo = this.selectedTeam;
+    const selectedTeam = document.getElementsByClassName('p-dropdown-clearable')[0];
+    this.title = (!this.title) ? 'Barcelona' : selectedTeam.textContent;
+
+    var year = this.selectedYear;
+    this.sortOptions = (this.selectedYear === 'Upcoming') ? this.sortOptions1 : this.sortOptions2;
 
     this.games = [];
-    var year = this.selectedYear;
-
-    this.sortOptions = (this.selectedYear === 'Upcoming')? this.sortOptions1 : this.sortOptions2;
-    
-    this.data.getGames(this.selectedTeam.value, year).subscribe(res => {
+    this.data.getGames(this.selectedTeam, year).subscribe(res => {
       this.games = (res);
       this.loading = false;
     }, error => {
@@ -107,53 +98,4 @@ export class AppComponent {
     });
   }
 
-  initializeTeamsID(): void {
-    this.groupedTeams = [
-      {
-        label: 'Spain',
-        items: [
-          { label: 'Barcelona', value: '83' },
-          { label: 'Real Madrid', value: '86' },
-          { label: 'Atletico Madrid', value: '1068' },
-          { label: 'Villarreal', value: '102' },
-          { label: 'Real Sociedad', value: '89' },
-        ]
-      },
-      {
-        label: 'Italy',
-        items: [
-          { label: 'Juventus', value: '111' },
-          { label: 'AC Milan', value: '103' },
-          { label: 'AS Roma', value: '104' },
-        ]
-      },
-      {
-        label: 'England',
-        items: [
-          { label: 'Liverpool', value: '364' },
-          { label: 'Chelsea', value: '363' },
-          { label: 'Manchester City', value: '382' },
-          { label: 'Manchester United', value: '360' },
-          { label: 'Tottenham Hotspur', value: '367' },
-          { label: 'Arsenal', value: '359' }
-        ]
-      },
-      {
-        label: 'Germany',
-        items: [
-          { label: 'Bayern Munich', value: '132' },
-          { label: 'Borussia Dortmund', value: '124' },
-          { label: 'RB Leipzig', value: '11420' },
-        ]
-      },
-      {
-        label: 'France',
-        items: [
-          { label: 'Paris S.G', value: '160' },
-          { label: 'Marseille', value: '176' },
-          { label: 'Lyon', value: '167' },
-        ]
-      }
-    ];
-  }
 }

@@ -64,30 +64,6 @@ var urlencodedParser = bodyParser.urlencoded({ extended: true })
 app.use(urlencodedParser);
 app.use(bodyParser.json());
 
-app.get('/countriesFlags/', async function (req, res) {
-    var countries = {};
-    var options = {
-        method: 'GET',
-        url: 'https://flagcdn.com/en/codes.json',
-        responseType: 'json',
-        json: true,
-        headers: {
-            'Connection': 'keep-alive',
-            'Accept-Encoding': '',
-            'Accept-Language': 'en-US,en;q=0.8'
-        }
-    };
-    fs.readFile('codes.json', 'utf8', (err, data) => {
-        if (err) {
-            console.log(err);
-        }
-        var body = JSON.parse(data);
-        Object.keys(body).forEach(v => countries[body[v]] = v);
-        res.send(countries);
-        console.log(countries);
-    })
-})
-
 app.get('/getGames/', function (req, res) {
     try {
         let games = [];
@@ -114,7 +90,7 @@ app.get('/getGames/', function (req, res) {
             if (respo) {
                 var body = respo.body;
                 console.timeEnd('getData');
-                if (!body.events) { res.send([]); return };
+                if (!body || !body.events) { res.send([]); return };
                 console.time('initData');
                 body.events.forEach(v => {
 
@@ -190,12 +166,21 @@ function getVideo(teamsString, score, year) {
     });
 }
 
-app.get('/saveTeams/', function (req, appRes) {
+app.get('/saveTeamsInFirebase/', function (req, appRes) {
+
+    var countriesCodes = {};
+    fs.readFile('codes.json', 'utf8', (err, data) => {
+        if (err) {
+            console.log(err);
+        }
+        var body = JSON.parse(data);
+        Object.keys(body).forEach(v => countriesCodes[body[v]] = v);
+    });
 
     var countries = {};
     var countriesNames = ['Spain', 'England', 'France', 'Germany', 'Italy'];
-    var leagues        = ['ESP.1', 'ENG.1',   'FRA.1',  'GER.1',   'ITA.1'];
-    
+    var leagues        = ['ESP.1', 'ENG.1'  , 'FRA.1' , 'GER.1'  , 'ITA.1'];
+
     var PromiseArr = [];
     for (let i = 0; i < leagues.length; i++) {
         PromiseArr.push(promisesObj(leagues[i], countriesNames[i]));
@@ -203,7 +188,7 @@ app.get('/saveTeams/', function (req, appRes) {
 
     Promise.all(PromiseArr).then(res => {
         for (r of res) {
-            countries[r.name] = { teams: r.teams, league: r.league };
+            countries[r.name] = { teams: r.teams, league: r.league, code: countriesCodes[r.name] };
         }
 
         //Insert teams into firebase
@@ -237,7 +222,7 @@ function promisesObj(league, country) {
 
     return new Promise((resolve, reject) => {
         faster(options, (err, res) => {
-            
+
             if (res) {
                 var teams = res.body.sports[0].leagues[0].teams.map(v => { return { value: v.team.id, label: v.team.name } });
                 var countryJson = { name: country, teams: teams, league: league };
@@ -248,14 +233,11 @@ function promisesObj(league, country) {
 }
 
 app.get('/getTeams/', function (req, res) {
-    // var country = req.query.country;
-    // var ref = database.ref(`countries/${country}/teams`);
     var ref = database.ref('countries');
-
-    // Attach an asynchronouss callback to read the data at our posts reference
+    console.time('startCountries');
     ref.once("value", function (snapshot) {
+        console.timeEnd('startCountries');
         res.send(snapshot.val());
-        console.log(snapshot.val());
     }, function (errorObject) {
         console.log("The read failed: " + errorObject.code);
     });

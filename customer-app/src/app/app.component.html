@@ -12,8 +12,8 @@
 <div class="searchPanel">
   <button pButton class="searchText" label="Search Games" icon="pi pi-search"></button>
 
-  <p-dropdown class="panelDropDown panelWidth" [(ngModel)]="selectedTeam.value" [options]="groupedTeams" filter="true"
-    placeholder="Select a Team" group="true" showClear="true" (onChange)="teamChange($event)">
+  <p-dropdown class="panelDropDown panelWidth" [(ngModel)]="selectedTeam" [options]="groupedTeams" filter="true"
+    placeholder="Select a Team" group="true" showClear="true" resetFilterOnHide="true">
     <ng-template let-group pTemplate="group">
       <div class="p-d-flex p-ai-center">
         <img src="https://flagcdn.com/16x12/{{group.value}}.png" [class]="'p-mr-2 flag flag-'" style="width: 20px" />
@@ -26,7 +26,7 @@
     optionLabel="value" showClear="true">
   </p-dropdown>
 
-  <button pButton class="getGamesBtn" [disabled]="!selectedYear || !selectedTeam.label" type="button" label="Get Games"
+  <button pButton class="getGamesBtn" [disabled]="!selectedYear || !selectedTeam" type="button" label="Get Games"
     (click)=getGames() icon="pi pi-chevron-right" iconPos="right">
   </button>
 </div>
@@ -37,7 +37,7 @@
   sortField="date" [paginator]="games.length" paginatorPosition="both" [rows]="14">
 
   <p-header class="filterPanel" *ngIf="games.length"> 
-    <p-dropdown #sortDropdown class="sortGames" [(ngModel)]="sortOrder" [options]="sortOptions" placeholder="Sort By Date"></p-dropdown>
+    <p-dropdown class="sortGames" [(ngModel)]="sortOrder" [options]="sortOptions" placeholder="Sort By Date"></p-dropdown>
     
     <span class="p-input-icon-left" style="justify-self: center;">
       <i class="pi pi-search"></i>
