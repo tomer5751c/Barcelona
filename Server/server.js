@@ -12,38 +12,8 @@ const { promises } = require('dns');
 const { log } = require('console');
 const port = 3000
 
-
 // create application/x-www-form-urlencoded parser
 // var transporter = nodemailer.createTransport();
-
-// function connect_To_Mongo_db() {
-//     return new Promise((resolve, reject) => {
-//         MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, function (err, db) {
-//             if (err)
-//                 reject(err);
-//             else {
-//                 dbo = db.db("my_database");
-//                 resolve(dbo);
-//             }
-//         })
-//     });
-// }
-
-// function insert_To_Db(data) {
-//     connect_To_Mongo_db().then((result) => {
-//         if (dbo) {
-//             dbo.collection("customers").insertOne(data, function (err, res) {
-//                 if (err) {
-//                     console.log(err);
-//                     throw err
-//                 }
-//                 else {
-//                     return res;
-//                 }
-//             });
-//         }
-//     });
-// }
 
 var firebaseConfig = {
     apiKey: "AIzaSyDvCJuvLuJl4UKgDuNeFQYPuKypcJN5GlI",
@@ -129,6 +99,7 @@ app.get('/getGames/', function (req, res) {
             }
         })
     }
+
     catch (error) {
         console.log(error);
         res.send(error);
@@ -263,3 +234,33 @@ app.listen(port, () => console.log(`Example app listening on port ${port}!`))
 //         console.dir(reply);
 //     });
 // });
+
+
+// function connect_To_Mongo_db() {
+//     return new Promise((resolve, reject) => {
+//         MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, function (err, db) {
+//             if (err)
+//                 reject(err);
+//             else {
+//                 dbo = db.db("my_database");
+//                 resolve(dbo);
+//             }
+//         })
+//     });
+// }
+
+// function insert_To_Db(data) {
+//     connect_To_Mongo_db().then((result) => {
+//         if (dbo) {
+//             dbo.collection("customers").insertOne(data, function (err, res) {
+//                 if (err) {
+//                     console.log(err);
+//                     throw err
+//                 }
+//                 else {
+//                     return res;
+//                 }
+//             });
+//         }
+//     });
+// }
