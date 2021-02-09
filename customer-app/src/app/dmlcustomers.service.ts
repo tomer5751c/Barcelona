@@ -7,33 +7,34 @@ import { HttpClient } from '@angular/common/http';
 export class DMLCustomersService {
   url = 'http://localhost:3000';
   constructor(private http: HttpClient) { }
+
   // tslint:disable-next-line:typedef
   insertCustomer(body) {
     console.log('in servicce');
-    try{
-      this.http.post('https://us-central1-football-games-project.cloudfunctions.net/app/insertCustomer/', body).toPromise().then(res=>{
+    try {
+      this.http.post('https://us-central1-football-games-project.cloudfunctions.net/app/insertCustomer/', body).toPromise().then(res => {
         console.log(res);
       }).catch(err => {
         console.log(err);
-
       });
     }
-    catch (err){
+    catch (err) {
       console.log(err);
     }
-
   }
 
   // tslint:disable-next-line:typedef
-  getGames(team, year){
+  getGames(team, year) {
     return this.http.get(this.url + '/getGames/?team=' + team + '&year=' + year);
   }
+
   // tslint:disable-next-line:typedef
-  getTeams(){
+  getTeams() {
     return this.http.get(this.url + '/getTeams/');
   }
+  
   // tslint:disable-next-line:typedef
-  getVideoGame(game){
+  getVideoGame(game) {
     const teams = `${game.name1} vs ${game.name2}`;
     const score = `${game.score1}-${game.score2}`;
     const year = new Date(game.date).getFullYear();

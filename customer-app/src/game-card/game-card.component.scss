@@ -2,7 +2,7 @@
     box-shadow: 0 2px 1px -1px rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 3px 0 rgba(0, 0, 0, 0.12);
     border-radius: 12px 12px 0 0;
     padding: 20px 2rem;
-    background: #fffffff5;
+    background: #ffffffe6;
     color: hsl(0, 0%, 0%);
     width: 32rem;
 }
@@ -82,7 +82,7 @@
 }
 
 .accordionHeader {
-    font-family: 'Alegreya';
+    font-family: 'system-ui';
     font-size: 17px;
 }
 
@@ -90,9 +90,9 @@
     .p-accordion p-accordiontab:last-child .p-accordion-header:not(.p-highlight) .p-accordion-header-link {
         border-radius: 0 0 12px 12px;
         border-width: unset;
-        border-color: #fffffff5;
+        border-color: #ffffffe6;
         background: #131a6feb;
-        color: #fffffff5;
+        color: #ffffffe6;
         font-weight: normal;
         justify-content: center;
         box-shadow: none;
@@ -100,8 +100,8 @@
     
     .p-accordion .p-accordion-header:not(.p-disabled).p-highlight .p-accordion-header-link {
         background: #131a6feb;
-        border-color: #fffffff5;
-        color: #fffffff5;
+        border-color: #ffffffe6;
+        color: #ffffffe6;
         border-radius: 0;
         justify-content: center;
         border-width: unset;
@@ -109,8 +109,8 @@
     }
 
     .p-accordion p-accordiontab:last-child .p-accordion-content {
-        border-color: #fffffff5;
-        background: #fffffff5;
+        border-color: #ffffffe6;
+        background: #ffffffe6;
         justify-content: center;
         border-width: unset;
         text-align: center;

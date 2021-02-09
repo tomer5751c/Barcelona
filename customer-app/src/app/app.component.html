@@ -33,7 +33,7 @@
 <!--- End Panel-->
 
 <!-- Data View -->
-<p-dataView #dataView [value]="games" layout="grid" styleClass="dataviewBG" filterBy="name1" [sortOrder]="sortOrder"
+<p-dataView #dataView [value]="games" layout="grid" styleClass="dataviewBG" filterBy="name1,name2" [sortOrder]="sortOrder"
   sortField="date" [paginator]="games.length" paginatorPosition="both" [rows]="14">
 
   <p-header class="filterPanel" *ngIf="games.length"> 
