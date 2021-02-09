@@ -12,7 +12,7 @@
 <div class="searchPanel">
   <button pButton class="searchText" label="Search Games" icon="pi pi-search"></button>
 
-  <p-dropdown class="panelDropDown panelWidth" [(ngModel)]="selectedTeam" [options]="groupedTeams" filter="true"
+  <p-dropdown class="panelDropDown panelWidth" [(ngModel)]="selectedTeamID" [options]="groupedTeams" filter="true"
     placeholder="Select a Team" group="true" showClear="true" resetFilterOnHide="true">
     <ng-template let-group pTemplate="group">
       <div class="p-d-flex p-ai-center">
@@ -26,7 +26,7 @@
     optionLabel="value" showClear="true">
   </p-dropdown>
 
-  <button pButton class="getGamesBtn" [disabled]="!selectedYear || !selectedTeam" type="button" label="Get Games"
+  <button pButton class="getGamesBtn" [disabled]="!selectedYear || !selectedTeamID" type="button" label="Get Games"
     (click)=getGames() icon="pi pi-chevron-right" iconPos="right">
   </button>
 </div>

@@ -24,7 +24,7 @@ export class AppComponent {
 
   groupedTeams: SelectItemGroup[];
   selectedCountry: string;
-  selectedTeam: string;
+  selectedTeamID: string;
   countriesCodes: any;
 
   searchInput: string;
@@ -37,7 +37,7 @@ export class AppComponent {
     this.loading = true;
 
     this.selectedCountry = 'Spain';
-    this.selectedTeam = '83';
+    this.selectedTeamID = '83';
     this.selectedYear = 'Upcoming';
 
     console.time('startCountries');
@@ -80,7 +80,7 @@ export class AppComponent {
     this.sortOrder = 0;
     this.loading = true;
 
-    this.titleLogo = this.selectedTeam;
+    this.titleLogo = this.selectedTeamID;
     const selectedTeam = document.getElementsByClassName('p-dropdown-clearable')[0];
     this.title = (!this.title) ? 'Barcelona' : selectedTeam.textContent;
 
@@ -88,7 +88,7 @@ export class AppComponent {
     this.sortOptions = (this.selectedYear === 'Upcoming') ? this.sortOptions1 : this.sortOptions2;
 
     this.games = [];
-    this.data.getGames(this.selectedTeam, year).subscribe(res => {
+    this.data.getGames(this.selectedTeamID, year).subscribe(res => {
       this.games = (res);
       this.loading = false;
     }, error => {

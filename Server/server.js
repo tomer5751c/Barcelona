@@ -232,6 +232,7 @@ function promisesObj(league, country) {
     })
 }
 
+//Get teams from firebase
 app.get('/getTeams/', function (req, res) {
     var ref = database.ref('countries');
     console.time('startCountries');
