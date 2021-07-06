@@ -1,4 +1,3 @@
-//אלעד צדיק בוקר טוב -האם אתה רואה את ההערה הזו
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
