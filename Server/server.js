@@ -37,7 +37,7 @@ app.use(bodyParser.json());
 app.get('/getGames/', function (req, res) {
     try {
         let games = [];
-        let team = !req.query.team ? '83' : req.query.team;
+        let team = !req.query.team ? '83'                     : req.query.team;
         let year = !req.query.year ? new Date().getFullYear() : req.query.year;
 
         var yearParam = (year === 'Upcoming') ? '&fixture=true' : ('&season=' + year);
