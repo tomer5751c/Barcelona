@@ -70,7 +70,7 @@ export class AppComponent {
   }
 
   printMessage(text): void {
-    this.messages.add({ severity: 'error', summary: 'Service Message', detail: text });
+    this.messages.add({ severity: 'error', summary: 'Service Message', detail: text});
   }
 
   getGames(): void {
@@ -101,9 +101,5 @@ export class AppComponent {
       this.loading = false;
     });
   }
-  onChange(event) {
-    console.log('event :' + event);
-    console.log(event);
-}
 
 }

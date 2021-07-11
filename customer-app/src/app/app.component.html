@@ -13,7 +13,7 @@
   <button pButton class="searchText" label="Search Games" icon="pi pi-search"></button>
 
   <p-dropdown class="panelDropDown panelWidth" [(ngModel)]="selectedTeamID" [options]="groupedTeams" filter="true"
-    placeholder="Select a Team" group="true" showClear="true" resetFilterOnHide="true" (onChange)="onChange($event)">
+    placeholder="Select a Team" group="true" showClear="true" resetFilterOnHide="true">
     <ng-template let-group pTemplate="group">
       <div class="p-d-flex p-ai-center">
         <img src="https://flagcdn.com/16x12/{{group.value}}.png" [class]="'p-mr-2 flag flag-'" style="width: 20px" />

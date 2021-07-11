@@ -1,51 +1,12 @@
 const functions = require('firebase-functions');
-const express = require('express')
-const app = express()
-var fs = require('fs');
-var cors = require('cors')
-var firebase = require('firebase')
-const faster = require('req-fast');
-var bodyParser = require('body-parser')
 const { google } = require('googleapis');
-
-// var MongoClient = require('mongodb').MongoClient;
-// var url = "mongodb+srv://tomerc:5751tomC*@my-db-o26ig.mongodb.net/test?retryWrites=true&useNewUrlParser=true";
-// var dbo;
-// const port = 3000
-
-app.use(cors());
-var urlencodedParser = bodyParser.urlencoded({ extended: true })
-app.use(urlencodedParser);
-app.use(bodyParser.json());
-
-// function connect_To_Mongo_db() {
-//     return new Promise((resolve, reject) => {
-//         MongoClient.connect(url, { useNewUrlParser: true, useUnifiedTopology: true }, function (err, db) {
-//             if (err)
-//                 reject(err);
-//             else {
-//                 dbo = db.db("my_database");
-//                 resolve(dbo);
-//             }
-//         })
-//     });
-// }
-
-// function insert_To_Db(data) {
-//     connect_To_Mongo_db().then((result) => {
-//         if (dbo) {
-//             dbo.collection("customers").insertOne(data, function (err, res) {
-//                 if (err) {
-//                     console.log(err);
-//                     throw err
-//                 }
-//                 else {
-//                     return res;
-//                 }
-//             });
-//         }
-//     });
-// }
+var bodyParser = require('body-parser')
+const faster = require('req-fast');
+const express = require('express')
+var firebase = require('firebase')
+var cors = require('cors')
+var fs = require('fs');
+const app = express()
 
 var firebaseConfig = {
     apiKey: "AIzaSyDvCJuvLuJl4UKgDuNeFQYPuKypcJN5GlI",
@@ -61,41 +22,31 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig)
 let database = firebase.database()
 
-app.get('/countriesFlags/', async function (req, res) {
-    var countries = {};
-    var options = {
-        method: 'GET',
-        url: 'https://flagcdn.com/en/codes.json',
-        responseType: 'json',
-        json: true,
-        headers: {
-            'Connection': 'keep-alive',
-            'Accept-Encoding': '',
-            'Accept-Language': 'en-US,en;q=0.8'
-        }
-    };
-    fs.readFile('codes.json', 'utf8', (err, data) => {
-        if (err) {
-            console.log(err);
-        }
-        var body = JSON.parse(data);
-        Object.keys(body).forEach(v => countries[body[v]] = v);
-        res.send(countries);
-    })
-})
+app.use(cors());
+var urlencodedParser = bodyParser.urlencoded({ extended: true })
+app.use(urlencodedParser);
+app.use(bodyParser.json());
+
 
 app.get('/getGames/', function (req, res) {
     try {
-        let games = [];
+        let games  = [];
         let team   = !req.query.team   ? '83'                     : req.query.team;
         let league = !req.query.league ? 'ESP.1'                  : req.query.league;
         let year   = !req.query.year   ? new Date().getFullYear() : req.query.year;
 
-        var yearParam = (year === 'Upcoming') ? '&fixture=true' : ('&season=' + year);
-
+        var yearParam;
+        if(year === 'Upcoming'){
+            yearParam = '&fixture=true';
+            league = 'ALL';
+        }
+        else{
+            yearParam = '&season=' + year;
+        }
+        
         var options = {
             method: 'GET',
-            url: "https://site.web.api.espn.com/apis/site/v2/sports/soccer/ALL/teams/" + team
+            url: "https://site.web.api.espn.com/apis/site/v2/sports/soccer/" + league + "/teams/" + team
                 + "/schedule?region=us&lang=en" + yearParam,
             json: true,
             responseType: 'json',
@@ -111,7 +62,7 @@ app.get('/getGames/', function (req, res) {
             if (respo) {
                 var body = respo.body;
                 console.timeEnd('getData');
-                if (!body.events) { res.send([]); return };
+                if (!body || !body.events) { res.send([]); return };
                 console.time('initData');
                 body.events.forEach(v => {
 
@@ -150,6 +101,7 @@ app.get('/getGames/', function (req, res) {
             }
         })
     }
+
     catch (error) {
         console.log(error);
         res.send(error);
@@ -157,23 +109,17 @@ app.get('/getGames/', function (req, res) {
 })
 
 app.get('/getVideo/', function (req, res) {
-    console.log(req.query);
     let teamsString = req.query.teamString;
     let score = req.query.score;
     let year = req.query.year;
-    console.log('score:', score);
-    console.log('teamsString:', teamsString);
 
     getVideo(teamsString, score, year).then(result => {
-        console.log('here');
         const items = result.data.items;
         if (items.length > 0) {
             let videoId = items[0].id.videoId;
-            console.log(videoId);
             res.send({ videoId: videoId });
         }
         else {
-            console.log('empty');
             res.send({ videoId: '' });
         }
 
@@ -193,10 +139,51 @@ function getVideo(teamsString, score, year) {
     });
 }
 
-app.get('/teamIds/', function (req, res) {
+app.get('/saveTeamsInFirebase/', function (req, appRes) {
+
+    var countriesCodes = {};
+    fs.readFile('codes.json', 'utf8', (err, data) => {
+        if (err) {
+            console.log(err);
+        }
+        var body = JSON.parse(data);
+        Object.keys(body).forEach(v => countriesCodes[body[v]] = v);
+    });
+
+    var countries = {};
+    var countriesNames = ['Spain', 'England', 'France', 'Germany', 'Italy'];
+    var leagues        = ['ESP.1', 'ENG.1'  , 'FRA.1' , 'GER.1'  , 'ITA.1'];
+
+    var PromiseArr = [];
+    for (let i = 0; i < leagues.length; i++) {
+        PromiseArr.push(promisesObj(leagues[i], countriesNames[i]));
+    }
+
+    Promise.all(PromiseArr).then(res => {
+        for (r of res) {
+            countries[r.name] = { teams: r.teams, league: r.league, code: countriesCodes[r.name] };
+        }
+
+        //Insert teams into firebase
+        database.ref("countries/").set(countries, function (error) {
+            if (error)
+                appRes.send("Failed with error: " + error)
+            else
+                appRes.send("Teams added successfully!");
+        })
+
+    }).catch(err => {
+        console.log(err);
+        appRes.send("Failed with error: " + err)
+    })
+})
+
+function promisesObj(league, country) {
+
     var options = {
         method: 'GET',
-        url: "https://site.web.api.espn.com/apis/site/v2/sports/soccer/ESP.1/teams?region=us&lang=en&limit=20",
+        url: "https://site.web.api.espn.com/apis/site/v2/sports/soccer/" + league
+            + "/teams?region=us&lang=en&limit=10",
         json: true,
         responseType: 'json',
         headers: {
@@ -205,27 +192,53 @@ app.get('/teamIds/', function (req, res) {
             'Accept-Language': 'en-US,en;q=0.8'
         }
     };
-    var teams = [];
-    faster(options, (err, res) => {
-        if (res) {
-            teams = res.body.sports[0].leagues[0].teams.map(v => { return { id: v.team.id, name: v.team.name } }
-            );
-            console.log(teams);
-        }
 
-        //Insert teams into firebase
-        database.ref("teams/").set(teams, function (error) {
-            if (!error) {
-                appRes.send("Teams added successfully")
-            } else {
-                appRes.send("Failed with error: " + error)
+    return new Promise((resolve, reject) => {
+        faster(options, (err, res) => {
+
+            if (res) {
+                var teams = res.body.sports[0].leagues[0].teams.map(v => { return { value: v.team.id, label: v.team.name } });
+                var countryJson = { name: country, teams: teams, league: league };
+                resolve(countryJson);
             }
         })
+    })
+}
+
+//Get teams from firebase
+app.get('/getTeams/', function (req, res) {
+    var ref = database.ref('countries');
+    console.time('startCountries');
+    ref.once("value", function (snapshot) {
+        console.timeEnd('startCountries');
+        res.send(snapshot.val());
+    }, function (errorObject) {
+        console.log("The read failed: " + errorObject.code);
+    });
+})
+
+app.get('/countriesFlags/', async function (req, res) {
+    var countries = {};
+    var options = {
+        method: 'GET',
+        url: 'https://flagcdn.com/en/codes.json',
+        responseType: 'json',
+        json: true,
+        headers: {
+            'Connection': 'keep-alive',
+            'Accept-Encoding': '',
+            'Accept-Language': 'en-US,en;q=0.8'
+        }
+    };
+    fs.readFile('codes.json', 'utf8', (err, data) => {
+        if (err) {
+            console.log(err);
+        }
+        var body = JSON.parse(data);
+        Object.keys(body).forEach(v => countries[body[v]] = v);
+        res.send(countries);
     })
 })
 
 exports.app = functions.https.onRequest(app);
-
-//app.listen(port, () => console.log(`Example app listening on port ${port}!`))
-
 

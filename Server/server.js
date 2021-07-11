@@ -1,5 +1,5 @@
-var bodyParser = require('body-parser')
 var { google } = require('googleapis');
+var bodyParser = require('body-parser')
 const faster = require('req-fast');
 const express = require('express')
 var firebase = require('firebase')
@@ -8,12 +8,7 @@ var fs = require('fs');
 const app = express()
 var url = "mongodb+srv://tomerc:5751tomC*@my-db-o26ig.mongodb.net/test?retryWrites=true&useNewUrlParser=true";
 var MongoClient = require('mongodb').MongoClient;
-const { promises } = require('dns');
-const { log } = require('console');
 const port = 3000
-
-// create application/x-www-form-urlencoded parser
-// var transporter = nodemailer.createTransport();
 
 var firebaseConfig = {
     apiKey: "AIzaSyDvCJuvLuJl4UKgDuNeFQYPuKypcJN5GlI",
@@ -221,6 +216,29 @@ app.get('/getTeams/', function (req, res) {
     }, function (errorObject) {
         console.log("The read failed: " + errorObject.code);
     });
+})
+
+app.get('/countriesFlags/', async function (req, res) {
+    var countries = {};
+    var options = {
+        method: 'GET',
+        url: 'https://flagcdn.com/en/codes.json',
+        responseType: 'json',
+        json: true,
+        headers: {
+            'Connection': 'keep-alive',
+            'Accept-Encoding': '',
+            'Accept-Language': 'en-US,en;q=0.8'
+        }
+    };
+    fs.readFile('codes.json', 'utf8', (err, data) => {
+        if (err) {
+            console.log(err);
+        }
+        var body = JSON.parse(data);
+        Object.keys(body).forEach(v => countries[body[v]] = v);
+        res.send(countries);
+    })
 })
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`))
