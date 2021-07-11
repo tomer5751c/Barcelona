@@ -24,8 +24,8 @@ export class DMLCustomersService {
   }
 
   // tslint:disable-next-line:typedef
-  getGames(team, year) {
-    return this.http.get(this.url + '/getGames/?team=' + team + '&year=' + year);
+  getGames(team, year, league) {
+    return this.http.get(this.url + '/getGames/?team=' + team + '&year=' + year + '&league=' + league);
   }
 
   // tslint:disable-next-line:typedef

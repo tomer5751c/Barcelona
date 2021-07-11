@@ -87,8 +87,9 @@ app.get('/countriesFlags/', async function (req, res) {
 app.get('/getGames/', function (req, res) {
     try {
         let games = [];
-        let team = !req.query.team ? '83' : req.query.team;
-        let year = !req.query.year ? new Date().getFullYear() : req.query.year;
+        let team   = !req.query.team   ? '83'                     : req.query.team;
+        let league = !req.query.league ? 'ESP.1'                  : req.query.league;
+        let year   = !req.query.year   ? new Date().getFullYear() : req.query.year;
 
         var yearParam = (year === 'Upcoming') ? '&fixture=true' : ('&season=' + year);
 

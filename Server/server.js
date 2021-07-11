@@ -36,15 +36,23 @@ app.use(bodyParser.json());
 
 app.get('/getGames/', function (req, res) {
     try {
-        let games = [];
-        let team = !req.query.team ? '83'                     : req.query.team;
-        let year = !req.query.year ? new Date().getFullYear() : req.query.year;
+        let games  = [];
+        let team   = !req.query.team   ? '83'                     : req.query.team;
+        let league = !req.query.league ? 'ESP.1'                  : req.query.league;
+        let year   = !req.query.year   ? new Date().getFullYear() : req.query.year;
 
-        var yearParam = (year === 'Upcoming') ? '&fixture=true' : ('&season=' + year);
-
+        var yearParam;
+        if(year === 'Upcoming'){
+            yearParam = '&fixture=true';
+            league = 'ALL';
+        }
+        else{
+            yearParam = '&season=' + year;
+        }
+        
         var options = {
             method: 'GET',
-            url: "https://site.web.api.espn.com/apis/site/v2/sports/soccer/ALL/teams/" + team
+            url: "https://site.web.api.espn.com/apis/site/v2/sports/soccer/" + league + "/teams/" + team
                 + "/schedule?region=us&lang=en" + yearParam,
             json: true,
             responseType: 'json',

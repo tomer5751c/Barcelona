@@ -25,7 +25,7 @@ export class AppComponent {
   groupedTeams: SelectItemGroup[];
   selectedCountry: string;
   selectedTeamID: string;
-  countriesCodes: any;
+  leagueCodes: SelectItem[];
 
   searchInput: string;
   sortOptions: SelectItem[];
@@ -36,14 +36,13 @@ export class AppComponent {
   constructor(private data: DMLCustomersService, public messages: MessageService) {
     this.loading = true;
 
-    this.selectedCountry = 'Spain';
     this.selectedTeamID = '83';
     this.selectedYear = 'Upcoming';
 
-    console.time('startCountries');
+    console.time('CountriesTime');
     this.data.getTeams().subscribe(countries => {
-      console.timeEnd('startCountries');
-      this.groupedTeams = Object.keys(countries).reverse().map(v => ({ value: countries[v].code, label: v, items: countries[v].teams }));
+      console.timeEnd('CountriesTime');
+      this.groupedTeams = Object.keys(countries).reverse().map(c => ({ value: countries[c].code,label: c,items: countries[c].teams, league: countries[c].league}));
       this.getGames();
     }, error => {
       console.log(error);
@@ -80,15 +79,20 @@ export class AppComponent {
     this.sortOrder = 0;
     this.loading = true;
 
+    //Selected Team
     this.titleLogo = this.selectedTeamID;
-    const selectedTeam = document.getElementsByClassName('p-dropdown-clearable')[0];
-    this.title = (!this.title) ? 'Barcelona' : selectedTeam.textContent;
+    const selectedTeam = document.getElementsByClassName('p-dropdown-clearable')[0].textContent;
+    this.title = (!this.title) ? 'Barcelona' : selectedTeam;
 
+    //Selected Year
     var year = this.selectedYear;
     this.sortOptions = (this.selectedYear === 'Upcoming') ? this.sortOptions1 : this.sortOptions2;
 
+    //Selected League
+    var league = (Object)(this.groupedTeams.find(country => country.items.find(team => team.label==selectedTeam))).league;
+
     this.games = [];
-    this.data.getGames(this.selectedTeamID, year).subscribe(res => {
+    this.data.getGames(this.selectedTeamID, year, league).subscribe(res => {
       this.games = (res);
       this.loading = false;
     }, error => {
@@ -97,5 +101,9 @@ export class AppComponent {
       this.loading = false;
     });
   }
+  onChange(event) {
+    console.log('event :' + event);
+    console.log(event);
+}
 
 }
