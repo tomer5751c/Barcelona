@@ -6,8 +6,9 @@ import { HttpClient } from '@angular/common/http';
 })
 export class DMLCustomersService {
   
+  //url = http://localhost:3000
   url = 'https://us-central1-football-games-project.cloudfunctions.net/app';
-  
+
   constructor(private http: HttpClient) { }
 
   // tslint:disable-next-line:typedef
